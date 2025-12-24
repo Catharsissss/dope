@@ -1,0 +1,991 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment for the order — Dope Lab</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/src/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/src/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/src/favicon-16x16.png">
+    <link rel="manifest" href="/src/site.webmanifest">
+    <link rel="stylesheet" href="/src/css/checkout.css">
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+    <script src="/src/js/geo.js"></script>
+    <style>
+        .crypto-section {
+            margin-top: 40px;
+            border-top: 1px solid var(--light-gray);
+            padding-top: 30px;
+        }
+
+        .crypto-title {
+            font-size: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .crypto-title svg {
+            margin-right: 10px;
+        }
+
+        .crypto-methods {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .crypto-method {
+            border: 1px solid var(--light-gray);
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .crypto-method:hover {
+            border-color: var(--black);
+        }
+
+        .crypto-method.selected {
+            border: 2px solid var(--black);
+            background-color: var(--gray);
+        }
+
+        .crypto-method img {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 10px;
+        }
+
+        .crypto-details {
+            background-color: var(--gray);
+            padding: 25px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .crypto-details.active {
+            display: block;
+        }
+
+        .crypto-amount {
+            font-size: 18px;
+            margin: 15px 0;
+        }
+
+        .crypto-qr {
+            margin: 20px auto;
+            width: 180px;
+            height: 180px;
+            background-color: var(--gray);
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        .crypto-qr img {
+            width: 200px !important;
+            height: 200px !important;
+            object-fit: contain;
+        }
+
+        .crypto-qr p {
+            text-align: center;
+            color: #666;
+            padding: 20px;
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .crypto-address {
+            background-color: var(--white);
+            padding: 12px;
+            font-family: monospace;
+            word-break: break-all;
+            margin: 15px 0;
+            border: 1px solid var(--light-gray);
+        }
+
+        .copy-btn {
+            background-color: var(--black);
+            color: var(--white);
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+            transition: opacity 0.3s;
+        }
+
+        .copy-btn:hover {
+            opacity: 0.9;
+        }
+
+        .payment-status {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f8f8;
+            border-left: 4px solid var(--black);
+            display: none;
+        }
+
+        .wallet-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #5e5e5d;
+            color: white;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .wallet-btn img {
+            width: 20px;
+            margin-right: 10px;
+        }
+
+        .timer {
+            font-weight: bold;
+            color: var(--black);
+        }
+
+        .network-selector {
+            margin: 15px 0;
+        }
+
+        .network-selector select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--black);
+            background-color: var(--white);
+        }
+
+        .network-info {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .toast-message {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 14px;
+            z-index: 1000;
+            animation: toastSlide 0.3s ease-out;
+        }
+
+        @keyframes toastSlide {
+            from {
+                bottom: -50px;
+                opacity: 0;
+            }
+
+            to {
+                bottom: 20px;
+                opacity: 1;
+            }
+        }
+
+        .crypto-rates-box {
+            background: #f8f8f8;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .rate-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 10px 0;
+            font-size: 16px;
+        }
+
+        .rate-label {
+            color: #666;
+        }
+
+        .rate-value {
+            font-weight: 500;
+            color: #333;
+        }
+
+        .rate-update-time {
+            text-align: center;
+            font-size: 12px;
+            color: #999;
+            margin-top: 15px;
+        }
+
+        .rate-icon {
+            width: 24px;
+            height: 24px;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+
+        .wallet-btn.loading {
+            position: relative;
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .wallet-btn.loading:after {
+            content: "";
+            position: absolute;
+            right: 10px;
+            width: 18px;
+            height: 18px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .pay-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            transition: opacity 0.3s;
+        }
+
+        .pay-button:hover {
+            opacity: 0.9;
+        }
+
+        .refresh-rates-btn {
+            background-color: #000000;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 10px 0;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+
+        .refresh-rates-btn:hover {
+            background-color: #323131;
+        }
+
+        .refresh-rates-btn svg {
+            margin-right: 8px;
+            width: 16px;
+            height: 16px;
+        }
+
+        .crypto-rates-section {
+            margin-top: 30px;
+            border-top: 1px solid var(--light-gray);
+            padding-top: 20px;
+        }
+
+        .crypto-rates-title {
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+
+        .order-subtotal,
+        .order-shipping {
+            margin: 10px 0;
+            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+            color: #666;
+        }
+
+        .order-total {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            border-top: 1px solid var(--light-gray);
+            padding-top: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 20px;
+            width: 100%;
+            max-width: 500px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .tab-btn {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .tab-btn.active {
+            font-weight: bold;
+            border-bottom: 2px solid #000;
+        }
+
+        .auth-tab-content {
+            display: none;
+        }
+
+        .auth-tab-content.active {
+            display: block;
+        }
+
+        .auth-tab-content input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            position: relative;
+        }
+
+        .error-message {
+            color: #ff4444;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        input.error {
+            border-color: #ff4444 !important;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: #000;
+            color: #fff;
+            text-decoration: none;
+            border: 1px solid #000;
+            transition: all 0.3s ease;
+            width: 100%;
+            text-align: center;
+            margin: 0 auto;
+            font-size: 14px;
+        }
+
+        .btn:hover {
+            background-color: #fff;
+            color: #000;
+        }
+
+        #verifyModal .modal-content {
+            text-align: center;
+        }
+
+        .countdown {
+            font-size: 12px;
+            color: #666;
+            margin-top: 10px;
+        }
+
+        .btn-text {
+            background: none;
+            border: none;
+            color: #0066cc;
+            cursor: pointer;
+            font-size: 14px;
+            margin-top: 10px;
+            padding: 0;
+        }
+
+        .btn-text:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes toastSlide {
+            from {
+                bottom: -50px;
+                opacity: 0;
+            }
+
+            to {
+                bottom: 20px;
+                opacity: 1;
+            }
+        }
+
+        .toast-message {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 14px;
+            z-index: 1000;
+            animation: toastSlide 0.3s ease-out;
+        }
+
+        .profile-dropdown {
+            position: relative;
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+            padding: 8px 0;
+            min-width: 160px;
+            z-index: 1000;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+            animation: dropdownFade 0.2s ease-out;
+        }
+
+        @keyframes dropdownFade {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 8px 16px;
+            color: #333;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f8f8f8;
+        }
+
+        .forgot-password {
+            display: block;
+            text-align: right;
+            font-size: 13px;
+            color: #666;
+            margin: -10px 0 15px;
+            text-decoration: none;
+        }
+
+        .forgot-password:hover {
+            text-decoration: underline;
+            color: #000;
+        }
+
+        .auth-tab-content input {
+            font-size: 13px !important;
+            height: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                margin: 20% auto;
+                width: 90%;
+            }
+
+            .auth-tabs {
+                flex-direction: column;
+            }
+
+            .tab-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .checkout-page {
+                flex-direction: column;
+                gap: 30px;
+            }
+
+            .crypto-methods {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .order-summary {
+                margin-top: 30px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+                width: 100%;
+            }
+
+            .logo {
+                width: 100%;
+                text-align: left;
+                font-size: 20px;
+                margin-bottom: 10px;
+                padding-right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                gap: 0;
+            }
+
+            nav ul li {
+                margin: 10px 0 0 0;
+            }
+
+            .container {
+                padding: 0 8px;
+            }
+
+            .checkout-page {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .crypto-methods {
+                grid-template-columns: 1fr;
+            }
+
+            .crypto-method {
+                padding: 10px;
+            }
+
+            .crypto-details {
+                padding: 12px;
+            }
+
+            .order-summary {
+                margin-top: 20px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .footer-links a {
+                margin: 0 0 8px 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            body {
+                font-size: 15px;
+            }
+
+            .crypto-title {
+                font-size: 16px;
+            }
+
+            .crypto-method img {
+                width: 32px;
+                height: 32px;
+            }
+
+            .crypto-qr {
+                width: 120px;
+                height: 120px;
+                padding: 5px;
+            }
+
+            .crypto-qr img {
+                width: 100px !important;
+                height: 100px !important;
+            }
+
+            .crypto-details {
+                padding: 6px;
+            }
+
+            .order-summary h2 {
+                font-size: 18px;
+            }
+
+            .order-subtotal,
+            .order-shipping,
+            .order-total {
+                font-size: 14px;
+            }
+
+            .crypto-rates-title {
+                font-size: 15px;
+            }
+
+            .rate-item {
+                font-size: 13px;
+            }
+
+            .modal-content {
+                margin: 20% auto;
+                width: 96%;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">DOPE LAB</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Main page</a></li>
+                    <li><a href="/src/catalog.html">Catalog</a></li>
+                    <li><a href="pay.html">Payment</a></li>
+                    <li><a href="shipping.html">Shipping</a></li>
+                    <li><a href="return.html">Return policy</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
+                    <li>
+                        <div class="profile-dropdown">
+                            <a href="#" class="profile-icon">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
+                                        stroke="currentColor" stroke-width="2" />
+                                    <path
+                                        d="M20.5899 22C20.5899 18.13 16.7399 15 11.9999 15C7.25991 15 3.40991 18.13 3.40991 22"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                </svg>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a href="profile.html" class="dropdown-item">Profile</a>
+                                <a href="#" class="dropdown-item" id="logout-btn">Logout</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="cart.html" class="cart-icon">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M6 2L3 6V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22 20.0391 21.7893 20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V6L18 2H6Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M16 10C16 11.0609 15.5786 12.0783 14.8284 12.8284C14.0783 13.5786 13.0609 14 12 14C10.9391 14 9.92172 13.5786 9.17157 12.8284C8.42143 12.0783 8 11.0609 8 10"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            <span class="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="checkout-page">
+            <div class="checkout-form">
+                <h1>Order Payment</h1>
+
+                <div class="form-group">
+                    <label for="email">Notification Email</label>
+                    <input type="email" id="email" placeholder="your@email.com">
+                </div>
+
+                <div class="crypto-section">
+                    <div class="crypto-title">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"
+                                stroke="black" stroke-width="2" />
+                            <path d="M7 12H17" stroke="black" stroke-width="2" stroke-linecap="round" />
+                            <path d="M12 7V17" stroke="black" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        Pay with Cryptocurrency
+                    </div>
+
+                    <div class="crypto-methods">
+                        <div class="crypto-method selected" data-currency="btc">
+                            <img src="/src/images/currency/btc.png" alt="Bitcoin">
+                            <div>Bitcoin</div>
+                        </div>
+                        <div class="crypto-method" data-currency="eth">
+                            <img src="/src/images/currency/eth.png" alt="Ethereum">
+                            <div>Ethereum</div>
+                        </div>
+                        <div class="crypto-method" data-currency="usdt">
+                            <img src="/src/images/currency/usdt.png" alt="USDT">
+                            <div>USDT</div>
+                        </div>
+                    </div>
+
+                    <div class="crypto-details active" id="btc-details">
+                        <p>Send the exact amount to the address below:</p>
+                        <div class="crypto-amount" id="btc-amount">0.0025 BTC ≈ $100.00</div>
+                        <div class="crypto-qr" id="btc-qr"></div>
+                        <div class="crypto-address" id="btc-address">bc1qzcduq2x6eggtvcazyd5jgls2z4sdgmyw2wtk9k</div>
+                        <button class="copy-btn" data-target="btc-address">Copy BTC address</button>
+                        <button class="wallet-btn" id="wallet-connect-btc">
+                            <img src="/src/images/wallet.svg" alt="Wallet">
+                            Connect Wallet
+                        </button>
+                        <button class="pay-button" id="pay-with-btc" style="display: none;">
+                            Pay with BTC
+                        </button>
+                        <div class="payment-status" id="btc-status">
+                            Waiting for payment... <span class="timer">15:00</span>
+                        </div>
+                    </div>
+
+                    <div class="crypto-details" id="eth-details">
+                        <p>Send the exact amount to the address below:</p>
+                        <div class="crypto-amount" id="eth-amount">0.05 ETH ≈ $100.00</div>
+                        <div class="crypto-qr" id="eth-qr"></div>
+                        <div class="crypto-address" id="eth-address">0x2525f55Fb0708582E05620BAEB44eDFfB76b779f</div>
+                        <button class="copy-btn" data-target="eth-address">Copy ETH address</button>
+                        <button class="wallet-btn" id="wallet-connect-eth">
+                            <img src="/src/images/wallet.svg" alt="Wallet">
+                            Connect Wallet
+                        </button>
+                        <button class="pay-button" id="pay-with-eth" style="display: none;">
+                            Pay with ETH
+                        </button>
+                        <div class="payment-status" id="eth-status">
+                            Waiting for payment... <span class="timer">15:00</span>
+                        </div>
+                    </div>
+
+                    <div class="crypto-details" id="usdt-details">
+                        <div class="network-selector">
+                            <label for="usdt-network">Select network:</label>
+                            <select id="usdt-network">
+                                <option value="erc20">ERC-20 (Ethereum)</option>
+                                <option value="trc20">TRC-20 (Tron)</option>
+                                <option value="bep20">BEP-20 (Binance Smart Chain)</option>
+                                <option value="avax">Avalanche C-Chain</option>
+                                <option value="arbitrum">Arbitrum One</option>
+                                <option value="optimism">Optimism</option>
+                                <option value="polygon">Polygon (Matic)</option>
+                            </select>
+                            <div class="network-info" id="usdt-network-info">
+                                Network fee: ~$1-5. Confirmation: 2-5 minutes.
+                            </div>
+                        </div>
+                        <p>Send the exact amount to the address below:</p>
+                        <div class="crypto-amount" id="usdt-amount">100 USDT ≈ $100.00</div>
+                        <div class="crypto-qr" id="usdt-qr"></div>
+                        <div class="crypto-address" id="usdt-address">0x2525f55Fb0708582E05620BAEB44eDFfB76b779f</div>
+                        <button class="copy-btn" data-target="usdt-address">Copy USDT address</button>
+                        <button class="wallet-btn" id="wallet-connect-usdt">
+                            <img src="/src/images/wallet.svg" alt="Wallet">
+                            Connect Wallet
+                        </button>
+                        <button class="pay-button" id="pay-with-usdt" style="display: none;">
+                            Pay with USDT
+                        </button>
+                        <div class="payment-status" id="usdt-status">
+                            Waiting for payment... <span class="timer">15:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="order-summary">
+                <h2>Your Order</h2>
+                <div class="order-items" id="order-items">
+                    <!-- Items will be added via JavaScript -->
+                </div>
+                <div class="order-subtotal">
+                    Subtotal: <span id="order-subtotal">$0.00</span>
+                </div>
+                <div class="order-shipping">
+                    Shipping: <span id="order-shipping">$0.00</span>
+                </div>
+                <div class="order-total" id="order-total">
+                    Total: $0.00
+                </div>
+
+                <div class="crypto-rates-section">
+                    <div class="crypto-rates-title">Cryptocurrency Rates</div>
+                    <div class="crypto-rates-box">
+                        <div class="rate-item">
+                            <div class="rate-label">
+                                <img src="/src/images/currency/btc.png" alt="BTC" class="rate-icon">
+                                BTC/USD:
+                            </div>
+                            <span class="rate-value" id="btc-rate">$0.00</span>
+                        </div>
+                        <div class="rate-item">
+                            <div class="rate-label">
+                                <img src="/src/images/currency/eth.png" alt="ETH" class="rate-icon">
+                                ETH/USD:
+                            </div>
+                            <span class="rate-value" id="eth-rate">$0.00</span>
+                        </div>
+                        <div class="rate-item">
+                            <div class="rate-label">
+                                <img src="/src/images/currency/usdt.png" alt="USDT" class="rate-icon">
+                                USDT/USD:
+                            </div>
+                            <span class="rate-value" id="usdt-rate">$1.00</span>
+                        </div>
+                        <div class="rate-update-time" id="rate-update-time"></div>
+                    </div>
+                    <!-- Button to refresh rates -->
+                    <button id="refresh-rates" class="refresh-rates-btn">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M1 4V10H7" stroke="white" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path d="M23 20V14H17" stroke="white" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                            <path
+                                d="M20.49 9C19.9828 7.56678 19.1209 6.2854 17.9845 5.27542C16.8482 4.26543 15.4745 3.55976 13.9917 3.22426C12.5089 2.88875 10.9652 2.93464 9.50481 3.35677C8.04437 3.77891 6.71475 4.56311 5.64 5.64L1 10M23 14L18.36 18.36C17.2853 19.4369 15.9556 20.2211 14.4952 20.6432C13.0348 21.0654 11.4911 21.1113 10.0083 20.7757C8.52547 20.4402 7.1518 19.7346 6.01547 18.7246C4.87913 17.7146 4.01717 16.4332 3.51 15"
+                                stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        Refresh rates
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="reviews.html">Reviews</a>
+                <a href="support.html">Technical Support</a>
+                <a href="shipping.html">Shipping</a>
+                <a href="return.html">Return Policy</a>
+                <a href="pay.html">Payment</a>
+                <a href="refer.html">Referral Program</a>
+            </div>
+            <p class="copyright">© 2025 DOPE LAB.</p>
+        </div>
+    </footer>
+
+    <div id="modals-placeholder">
+        <!-- authModal: Login and Registration Modal -->
+        <div id="authModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+
+                <div class="auth-tabs">
+                    <button class="tab-btn active" data-tab="login">Login</button>
+                    <button class="tab-btn" data-tab="register">Register</button>
+                </div>
+
+                <div id="login" class="auth-tab-content active">
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <input type="email" id="loginEmail" placeholder="Email" required>
+                            <div class="error-message" id="loginEmailError"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="loginPassword" placeholder="Password" required>
+                            <div class="error-message" id="loginPasswordError"></div>
+                        </div>
+                        <button type="submit" class="btn">Sign in</button>
+                    </form>
+                </div>
+
+                <div id="register" class="auth-tab-content">
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <input type="text" id="regName" placeholder="Your Name" required>
+                            <div class="error-message" id="regNameError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" id="regEmail" placeholder="Email" required>
+                            <div class="error-message" id="regEmailError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" id="regPassword" placeholder="Password (min 6 characters)" required>
+                            <div class="error-message" id="regPasswordError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" id="referralCode" placeholder="Referral Code (optional)">
+                        </div>
+
+                        <button type="submit" class="btn">Sign up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/src/js/auth.js"></script>
+    <script src="/src/js/pm.js"></script>
+</body>
+
+</html>

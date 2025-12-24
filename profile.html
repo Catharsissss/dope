@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My profile — DOPE LAB</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/src/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/src/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/src/favicon-16x16.png">
+    <link rel="manifest" href="/src/site.webmanifest">
+    <link rel="stylesheet" href="/src/css/profile.css">
+    <script src="/src/js/geo.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">DOPE LAB</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Main page</a></li>
+                    <li><a href="/src/catalog.html">Catalog</a></li>
+                    <li><a href="pay.html">Payment</a></li>
+                    <li><a href="shipping.html">Shipping</a></li>
+                    <li><a href="return.html">Return policy</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
+                    <li>
+                        <div class="profile-dropdown">
+                            <a href="#" class="profile-icon">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
+                                        stroke="currentColor" stroke-width="2" />
+                                    <path
+                                        d="M20.5899 22C20.5899 18.13 16.7399 15 11.9999 15C7.25991 15 3.40991 18.13 3.40991 22"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                </svg>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a href="profile.html" class="dropdown-item">Profile</a>
+                                <a href="#" class="dropdown-item" id="logout-btn">Logout</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="cart.html" class="cart-icon">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M6 2L3 6V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22 20.0391 21.7893 20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V6L18 2H6Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M16 10C16 11.0609 15.5786 12.0783 14.8284 12.8284C14.0783 13.5786 13.0609 14 12 14C10.9391 14 9.92172 13.5786 9.17157 12.8284C8.42143 12.0783 8 11.0609 8 10"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            <span class="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="profile-container">
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <img src="/src/images/profile.svg" alt="">
+            </div>
+            <div>
+                <h1 class="profile-name">John Doe</h1>
+                <p class="profile-email">user@example.com</p>
+            </div>
+        </div>
+
+        <div class="profile-tabs">
+            <div class="profile-tab active" data-tab="personal">Personal Information</div>
+            <div class="profile-tab" data-tab="orders">Order History</div>
+            <div class="profile-tab" data-tab="referral">Referral Program</div>
+        </div>
+
+        <div class="tab-content active" id="personal">
+            <h2>Personal Information</h2>
+            <form class="personal-info-form">
+                <div class="form-row">
+                    <label>First Name</label>
+                    <input type="text" placeholder="Name">
+                </div>
+                <div class="form-row">
+                    <label>Last Name</label>
+                    <input type="text" placeholder="Surname">
+                </div>
+                <div class="form-row">
+                    <label>Date of Birth</label>
+                    <input type="date" placeholder="Birth date">
+                </div>
+                <div class="form-row">
+                    <label>Phone</label>
+                    <input type="tel" placeholder="Phone">
+                </div>
+                <button type="submit" class="save-btn">Save Changes</button>
+            </form>
+        </div>
+
+        <div class="tab-content" id="orders">
+            <h2>Order History</h2>
+            <div class="order-history">
+            </div>
+        </div>
+
+        <div class="tab-content" id="referral">
+            <h2>Referral Program</h2>
+            <div class="referral-section">
+                <p>Invite friends and earn bonuses for every purchase!</p>
+
+                <div class="referral-title">Your referral code:</div>
+                <div class="referral-code"></div>
+
+                <div class="referral-stats">
+                    <div class="stat-card">
+                        <div class="stat-value invited-count">0</div>
+                        <div class="stat-label">Invited</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value bonus-count">0</div>
+                        <div class="stat-label">Bonuses</div>
+                    </div>
+                </div>
+            </div>
+            <div class="referral-progress">
+                <div class="progress-text">
+                    <span class="current-points">0</span>/100 points
+                    <span class="free-product-text">Get any product for free when you reach 100 points!</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="reviews.html">Reviews</a>
+                <a href="support.html">Technical Support</a>
+                <a href="shipping.html">Shipping</a>
+                <a href="return.html">Return Policy</a>
+                <a href="pay.html">Payment</a>
+                <a href="refer.html">Referral Program</a>
+            </div>
+            <p class="copyright">© 2025 DOPE LAB.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.profile-tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const user = JSON.parse(localStorage.getItem('user')) || {};
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+
+            const personalForm = document.querySelector('.personal-info-form');
+            if (personalForm) {
+                personalForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const name = personalForm.querySelector('input[type="text"]').value.trim();
+                    const surname = personalForm.querySelectorAll('input[type="text"]')[1].value.trim();
+                    const birth = personalForm.querySelector('input[type="date"]').value;
+                    const phone = personalForm.querySelector('input[type="tel"]').value.trim();
+
+                    user.name = name;
+                    user.surname = surname;
+                    user.birth = birth;
+                    user.phone = phone;
+
+                    const idx = users.findIndex(u => u.email === user.email);
+                    if (idx !== -1) {
+                        users[idx] = { ...users[idx], ...user };
+                        localStorage.setItem('users', JSON.stringify(users));
+                    }
+
+                    localStorage.setItem('user', JSON.stringify(user));
+
+                    const nameEl = document.querySelector('.profile-name');
+                    if (nameEl) nameEl.textContent = user.name;
+                    showToastMessage('Данные успешно сохранены!');
+                });
+            }
+
+            if (user && user.email) {
+                const ordersKey = 'orders_' + user.email;
+                const orders = JSON.parse(localStorage.getItem(ordersKey)) || [];
+                const orderHistory = document.querySelector('.order-history');
+                if (orderHistory) {
+                    orderHistory.innerHTML = '';
+                    if (orders.length === 0) {
+                        orderHistory.innerHTML = '<p>You have no orders yet.</p>';
+                    } else {
+                        orders.slice().reverse().forEach(order => {
+                            let itemsHtml = '';
+                            order.items.forEach(item => {
+                                itemsHtml += `
+                                <div class="order-product">
+                                    <div class="product-info">
+                                        <div>${item.name}</div>
+                                        <div>Size: ${item.size || '-'}, Color: ${item.color || '-'}</div>
+                                        <div>${item.quantity} × $${item.price.toFixed(2)}</div>
+                                    </div>
+                                </div>
+                            `;
+                            });
+                            orderHistory.innerHTML += `
+                            <div class="order-card">
+                                <div class="order-header">
+                                    <div>
+                                        <strong>Order #${order.id || ''}</strong>
+                                        <div class="order-date">${new Date(order.date).toLocaleDateString()}</div>
+                                    </div>
+                                    <div class="order-status status-completed">Completed</div>
+                                </div>
+                                <div class="order-products">
+                                    ${itemsHtml}
+                                </div>
+                                <div style="text-align: right; margin-top: 15px;">
+                                    <strong>Total: $${order.total.toFixed(2)}</strong>
+                                </div>
+                            </div>
+                        `;
+                        });
+                    }
+                }
+            }
+
+            const codeEl = document.querySelector('.referral-code');
+            if (codeEl) codeEl.textContent = user.referralCode || '';
+
+            const invitedCount = users.filter(u => u.referralCodeUsed === user.referralCode).length;
+            const invitedCountEl = document.querySelector('.invited-count');
+            if (invitedCountEl) invitedCountEl.textContent = invitedCount;
+            const bonusCountEl = document.querySelector('.bonus-count');
+            if (bonusCountEl) bonusCountEl.textContent = invitedCount * 10;
+
+            const progressFill = document.querySelector('.progress-fill');
+            const currentPointsEl = document.querySelector('.current-points');
+
+            if (bonusCountEl && progressFill && currentPointsEl) {
+                const bonusPoints = invitedCount * 10;
+                const progressWidth = Math.min(bonusPoints, 100);
+
+                progressFill.style.width = `${progressWidth}%`;
+                currentPointsEl.textContent = bonusPoints;
+
+                if (bonusPoints >= 100) {
+                    document.querySelector('.free-product-text').textContent = '🎉 Congratulations! Choose a free product!';
+                    document.querySelector('.free-product-text').style.color = '#2e7d32';
+                }
+            }
+        });
+    </script>
+    <script src="/src/js/auth.js"></script>
+</body>
+
+</html>

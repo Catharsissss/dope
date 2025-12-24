@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order successful — Dope Lab</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/src/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/src/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/src/favicon-16x16.png">
+    <link rel="manifest" href="/src/site.webmanifest">
+    <link rel="stylesheet" href="/src/css/order-success.css">
+    <script src="/src/js/geo.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">DOPE LAB</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Main page</a></li>
+                    <li><a href="/src/catalog.html">Catalog</a></li>
+                    <li><a href="pay.html">Payment</a></li>
+                    <li><a href="shipping.html">Shipping</a></li>
+                    <li><a href="return.html">Return policy</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
+                    <li>
+                        <div class="profile-dropdown">
+                            <a href="#" class="profile-icon">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
+                                        stroke="currentColor" stroke-width="2" />
+                                    <path
+                                        d="M20.5899 22C20.5899 18.13 16.7399 15 11.9999 15C7.25991 15 3.40991 18.13 3.40991 22"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                </svg>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a href="profile.html" class="dropdown-item">Profile</a>
+                                <a href="#" class="dropdown-item" id="logout-btn">Logout</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="cart.html" class="cart-icon">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M6 2L3 6V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22 20.0391 21.7893 20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V6L18 2H6Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M16 10C16 11.0609 15.5786 12.0783 14.8284 12.8284C14.0783 13.5786 13.0609 14 12 14C10.9391 14 9.92172 13.5786 9.17157 12.8284C8.42143 12.0783 8 11.0609 8 10"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            <span class="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div class="order-success">
+            <svg class="success-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M22 11.08V12C21.9988 14.1564 21.3005 16.2547 20.0093 17.9818C18.7182 19.709 16.9033 20.9725 14.8354 21.5839C12.7674 22.1953 10.5573 22.1219 8.53447 21.3746C6.51168 20.6273 4.78465 19.2461 3.61096 17.4371C2.43727 15.628 1.87979 13.4881 2.02168 11.3363C2.16356 9.18455 2.99721 7.13631 4.39828 5.49706C5.79935 3.85781 7.69279 2.71537 9.79619 2.24013C11.8996 1.7649 14.1003 1.98232 16.07 2.85999"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M22 4L12 14.01L9 11.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+
+            <h1>Thank you for your order!</h1>
+            <p>We have received your order and started processing it.</p>
+            <p>Our manager will contact you soon for confirmation.</p>
+
+            <div class="order-details">
+                <h3>Order Information</h3>
+                <p><strong>Order Number:</strong> <span id="orderNumber">DL-
+                        <script>document.write(new Date().getTime())</script>
+                    </span></p>
+                <p><strong>Date:</strong> <span id="orderDate">
+                        <script>document.write(new Date().toLocaleDateString())</script>
+                    </span></p>
+                <p><strong>Amount:</strong> <span id="orderAmount"></span></p>
+                <p><strong>Delivery Method:</strong> Courier</p>
+                <p><strong>Delivery Address:</strong> <span id="deliveryAddress"></span></p>
+            </div>
+
+            <a href="catalog.html" class="btn">Back to Catalog</a>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="reviews.html">Reviews</a>
+                <a href="support.html">Technical Support</a>
+                <a href="shipping.html">Shipping</a>
+                <a href="return.html">Return Policy</a>
+                <a href="pay.html">Payment</a>
+                <a href="refer.html">Referral Program</a>
+            </div>
+            <p class="copyright">© 2025 DOPE LAB.</p>
+        </div>
+    </footer>
+
+    <div id="modals-placeholder">
+        <!-- authModal: Login and Registration Modal -->
+        <div id="authModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+
+                <div class="auth-tabs">
+                    <button class="tab-btn active" data-tab="login">Login</button>
+                    <button class="tab-btn" data-tab="register">Register</button>
+                </div>
+
+                <div id="login" class="auth-tab-content active">
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <input type="email" id="loginEmail" placeholder="Email" required>
+                            <div class="error-message" id="loginEmailError"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="loginPassword" placeholder="Password" required>
+                            <div class="error-message" id="loginPasswordError"></div>
+                        </div>
+                        <button type="submit" class="btn">Sign in</button>
+                    </form>
+                </div>
+
+                <div id="register" class="auth-tab-content">
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <input type="text" id="regName" placeholder="Your Name" required>
+                            <div class="error-message" id="regNameError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" id="regEmail" placeholder="Email" required>
+                            <div class="error-message" id="regEmailError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" id="regPassword" placeholder="Password (min 6 characters)" required>
+                            <div class="error-message" id="regPasswordError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" id="referralCode" placeholder="Referral Code (optional)">
+                        </div>
+
+                        <button type="submit" class="btn">Sign up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/src/js/auth.js"></script>
+
+    <script>
+        // Load order data from localStorage
+        document.addEventListener('DOMContentLoaded', function () {
+            // Reset cart counter
+            document.querySelector('.cart-count').textContent = '0';
+
+            // Load last order data if available
+            const orderData = JSON.parse(localStorage.getItem('lastOrder')) || {};
+
+            if (orderData.total) {
+                document.getElementById('orderAmount').textContent = orderData.total.toFixed(2) + ' $';
+            }
+
+            if (orderData.customer?.address) {
+                document.getElementById('deliveryAddress').textContent = orderData.customer.address;
+            }
+
+            // Clear last order data
+            localStorage.removeItem('lastOrder');
+        });
+    </script>
+</body>
+
+</html>

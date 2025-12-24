@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catalog — Dope Lab</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/src/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/src/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/src/favicon-16x16.png">
+    <link rel="manifest" href="/src/site.webmanifest">
+    <link rel="stylesheet" href="/src/css/catalog.css">
+    <script src="/src/js/geo.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">DOPE LAB</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Main page</a></li>
+                    <li><a href="/src/catalog.html">Catalog</a></li>
+                    <li><a href="pay.html">Payment</a></li>
+                    <li><a href="shipping.html">Shipping</a></li>
+                    <li><a href="return.html">Return policy</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
+                    <li>
+                        <div class="profile-dropdown">
+                            <a href="#" class="profile-icon">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
+                                        stroke="currentColor" stroke-width="2" />
+                                    <path
+                                        d="M20.5899 22C20.5899 18.13 16.7399 15 11.9999 15C7.25991 15 3.40991 18.13 3.40991 22"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                </svg>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a href="profile.html" class="dropdown-item">Profile</a>
+                                <a href="#" class="dropdown-item" id="logout-btn">Logout</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="cart.html" class="cart-icon">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M6 2L3 6V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22 20.0391 21.7893 20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V6L18 2H6Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M16 10C16 11.0609 15.5786 12.0783 14.8284 12.8284C14.0783 13.5786 13.0609 14 12 14C10.9391 14 9.92172 13.5786 9.17157 12.8284C8.42143 12.0783 8 11.0609 8 10"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            <span class="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="catalog">
+            <div class="container">
+                <div class="catalog-header">
+                    <h1>Product catalog</h1>
+                    <p>All Dope Lab collections in one place</p>
+                </div>
+
+                <div class="filters">
+                    <button class="filter-btn active" data-category="all">All</button>
+                    <button class="filter-btn" data-category="t-shirts">T-shirts</button>
+                    <button class="filter-btn" data-category="hoodies">Hoodies</button>
+                    <button class="filter-btn" data-category="pants">Pants</button>
+                    <button class="filter-btn" data-category="anime-jackets">Anime jackets</button>
+                </div>
+
+                <div class="products-grid">
+                    <!-- Products will be loaded via JS -->
+                </div>
+                <button id="show-more-btn" class="btn" style="display:none; margin: 0 auto 40px auto;">Show more</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="reviews.html">Reviews</a>
+                <a href="support.html">Technical Support</a>
+                <a href="shipping.html">Shipping</a>
+                <a href="return.html">Return Policy</a>
+                <a href="pay.html">Payment</a>
+                <a href="refer.html">Referral Program</a>
+            </div>
+            <p class="copyright">© 2025 DOPE LAB.</p>
+        </div>
+    </footer>
+    
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modal-product-name">Product Name</h2>
+            <img id="modal-product-image" src="" alt="" class="modal-product-image">
+            <img id="modal-product-image" src="" alt="" class="modal-product-image">
+            <div id="modal-thumbnails" class="modal-thumbnails"></div>
+
+            <div class="modal-options">
+                <div class="option-group">
+                    <label>Color:</label>
+                    <div id="color-options" class="options-container"></div>
+                </div>
+
+                <div class="option-group">
+                    <label>Size:</label>
+                    <div id="size-options" class="options-container"></div>
+                </div>
+
+                <div class="option-group">
+                    <label>Quantity:</label>
+                    <div class="quantity-selector">
+                        <button class="quantity-btn minus">-</button>
+                        <span class="quantity-value">1</span>
+                        <button class="quantity-btn plus">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <button id="add-to-cart-modal" class="add-to-cart-btn">Add to Cart</button>
+        </div>
+    </div>
+    <div id="purchase-notification" class="notification">
+        <div class="notification-content">
+            <button class="close-notification">&times;</button>
+            <p>👋 <span class="notification-text">Just purchased <strong class="product-name">Product</strong> <span
+                        class="notification-time">1 minute ago</span></span></p>
+        </div>
+    </div>
+    <div id="modals-placeholder"></div>
+    <script>
+        // Load modals
+        fetch('/src/auth-modal.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('modals-placeholder').innerHTML = html;
+                // Initialize authentication system
+                if (typeof initAuthSystem === 'function') {
+                    initAuthSystem();
+                }
+            });
+    </script>
+    <script src="/src/js/app.js"></script>
+</body>
+
+</html>

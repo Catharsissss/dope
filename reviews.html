@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reviews — Dope Lab</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/src/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/src/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/src/favicon-16x16.png">
+    <link rel="manifest" href="/src/site.webmanifest">
+    <link rel="stylesheet" href="/src/css/index.css">
+    <script src="/src/js/geo.js"></script>
+    <style>
+        .reviews-page {
+            padding: 40px 0;
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .reviews-hero {
+            background: linear-gradient(45deg, #f9f9f9, #2d2d2d);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .reviews-hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .reviews-hero p {
+            font-size: 1.5rem;
+        }
+
+        .reviews-filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 3rem 0;
+            padding: 20px;
+            background: var(--gray);
+            border-radius: 8px;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .filter-select {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .rating-filter {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .stars {
+            display: flex;
+            gap: 5px;
+        }
+
+        .star-btn {
+            background: none;
+            border: none;
+            font-size: 1.4rem;
+            color: #ffd700;
+            cursor: pointer;
+        }
+
+        .review-card {
+            background: white;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 25px;
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .author-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+
+        .rating {
+            color: #ffd700;
+            font-size: 1.1rem;
+        }
+
+        .verified-badge {
+            background: #4CAF50;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .review-body p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .review-footer {
+            margin-top: 15px;
+            display: flex;
+            gap: 15px;
+        }
+
+        .helpful-btn,
+        .reply-btn {
+            background: none;
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .add-review {
+            margin: 4rem 0;
+            padding-top: 3rem;
+            margin-bottom: 3rem;
+            border-top: 2px solid #eee;
+            text-align: center;
+        }
+
+        .review-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .rating-input {
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .submit-btn {
+            background: var(--black);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 30px 0;
+        }
+
+        .page-btn {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            background: none;
+            cursor: pointer;
+        }
+
+        .page-btn.active {
+            background: var(--black);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .reviews-filters {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+            }
+
+            .review-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .review-footer {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .reviews-hero h1 {
+                font-size: 2rem;
+            }
+
+            .author-info h3 {
+                font-size: 1.1rem;
+            }
+        }
+
+        .rating-input .star-btn {
+            color: #ccc;
+            font-size: 1.7rem;
+            transition: color 0.2s;
+            position: relative;
+            z-index: 1;
+        }
+
+        .rating-input .star-btn.selected,
+        .rating-input .star-btn.hovered {
+            color: #ffd700;
+        }
+
+        .review-toast {
+            position: fixed;
+            left: 50%;
+            bottom: 40px;
+            transform: translateX(-50%);
+            background: #222;
+            color: #fff;
+            padding: 18px 32px;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s;
+            z-index: 9999;
+        }
+
+        .review-toast.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .helpful-btn.active {
+            background: #ffd700;
+            color: #222;
+            border-color: #ffd700;
+            font-weight: bold;
+        }
+
+        @media (max-width: 992px) {
+            .reviews-page {
+                padding: 24px 0;
+            }
+
+            .reviews-hero {
+                padding: 40px 0;
+            }
+
+            .program-card {
+                padding: 24px 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+                width: 100%;
+            }
+
+            .logo {
+                width: 100%;
+                text-align: left;
+                font-size: 20px;
+                margin-bottom: 10px;
+                padding-right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                gap: 0;
+            }
+
+            nav ul li {
+                margin: 10px 0 0 0;
+            }
+
+            .container {
+                padding: 0 8px;
+            }
+
+            .reviews-hero {
+                padding: 24px 0;
+            }
+
+            .reviews-hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .reviews-hero p {
+                font-size: 1.1rem;
+            }
+
+            .reviews-filters {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+                padding: 12px;
+            }
+
+            .review-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .review-footer {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .review-card {
+                padding: 14px;
+            }
+
+            .add-review {
+                padding-top: 1.5rem;
+                margin: 2rem 0;
+            }
+
+            .review-form {
+                max-width: 100%;
+                padding: 0 2px;
+            }
+
+            .pagination {
+                gap: 6px;
+                margin: 18px 0;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .footer-links a {
+                margin: 0 0 8px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .reviews-hero {
+                padding: 10px 0;
+            }
+
+            .reviews-hero h1 {
+                font-size: 1.1rem;
+            }
+
+            .reviews-hero p {
+                font-size: 1rem;
+            }
+
+            .review-card {
+                padding: 7px;
+            }
+
+            .review-header .author-info h3 {
+                font-size: 1rem;
+            }
+
+            .review-body p {
+                font-size: 0.95rem;
+            }
+
+            .review-footer {
+                gap: 4px;
+            }
+
+            .add-review h2 {
+                font-size: 1.1rem;
+            }
+
+            .footer-links {
+                gap: 4px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">DOPE LAB</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Main page</a></li>
+                    <li><a href="/src/catalog.html">Catalog</a></li>
+                    <li><a href="pay.html">Payment</a></li>
+                    <li><a href="shipping.html">Shipping</a></li>
+                    <li><a href="return.html">Return policy</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
+                    <li>
+                        <div class="profile-dropdown">
+                            <a href="#" class="profile-icon">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
+                                        stroke="currentColor" stroke-width="2" />
+                                    <path
+                                        d="M20.5899 22C20.5899 18.13 16.7399 15 11.9999 15C7.25991 15 3.40991 18.13 3.40991 22"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                </svg>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a href="profile.html" class="dropdown-item">Profile</a>
+                                <a href="#" class="dropdown-item" id="logout-btn">Logout</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="cart.html" class="cart-icon">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M6 2L3 6V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22 20.0391 21.7893 20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V6L18 2H6Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M16 10C16 11.0609 15.5786 12.0783 14.8284 12.8284C14.0783 13.5786 13.0609 14 12 14C10.9391 14 9.92172 13.5786 9.17157 12.8284C8.42143 12.0783 8 11.0609 8 10"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            <span class="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="reviews-page">
+        <section class="reviews-hero">
+            <div class="container">
+                <h1>Our Customers' Experience</h1>
+                <p>Real reviews about quality and service</p>
+            </div>
+        </section>
+
+        <section class="reviews-content">
+            <div class="container">
+                <div class="reviews-filters">
+                    <div class="filter-group">
+                        <label>Sort by:</label>
+                        <select class="filter-select">
+                            <option>Newest</option>
+                            <option>Rating</option>
+                            <option>Helpfulness</option>
+                        </select>
+                    </div>
+                    <div class="rating-filter">
+                        <span>Rating:</span>
+                        <div class="stars">
+                            <button class="star-btn active">★</button>
+                            <button class="star-btn active">★</button>
+                            <button class="star-btn active">★</button>
+                            <button class="star-btn active">★</button>
+                            <button class="star-btn">★</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reviews-grid">
+                </div>
+
+                <div class="pagination">
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <span class="dots">...</span>
+                    <button class="page-btn">10</button>
+                </div>
+
+                <div class="add-review">
+                    <h2>Write your review</h2>
+                    <form class="review-form">
+                        <div class="form-group">
+                            <input type="text" placeholder="Your name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" placeholder="Email for feedback" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea placeholder="Your review" rows="5" required></textarea>
+                        </div>
+                        <div class="rating-input">
+                            <span>Your rating:</span>
+                            <div class="stars">
+                                <button type="button" class="star-btn">★</button>
+                                <button type="button" class="star-btn">★</button>
+                                <button type="button" class="star-btn">★</button>
+                                <button type="button" class="star-btn">★</button>
+                                <button type="button" class="star-btn">★</button>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-btn">Submit review</button>
+                    </form>
+                </div>
+
+                <div class="reviews-faq">
+                    <h2>❔ How we handle reviews</h2>
+                    <details class="faq-item">
+                        <summary>How are reviews moderated?</summary>
+                        <p>All reviews are checked within 24 hours for compliance with our publication rules.</p>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Can I edit my submitted review?</summary>
+                        <p>Yes, within 48 hours after publication via your account.</p>
+                    </details>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="reviews.html">Reviews</a>
+                <a href="support.html">Technical Support</a>
+                <a href="shipping.html">Shipping</a>
+                <a href="return.html">Return Policy</a>
+                <a href="pay.html">Payment</a>
+                <a href="refer.html">Referral Program</a>
+            </div>
+            <p class="copyright">© 2025 DOPE LAB.</p>
+        </div>
+    </footer>
+
+    <div id="modals-placeholder">
+        <div id="authModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+
+                <div class="auth-tabs">
+                    <button class="tab-btn active" data-tab="login">Login</button>
+                    <button class="tab-btn" data-tab="register">Register</button>
+                </div>
+
+                <div id="login" class="auth-tab-content active">
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <input type="email" id="loginEmail" placeholder="Email" required>
+                            <div class="error-message" id="loginEmailError"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="loginPassword" placeholder="Password" required>
+                            <div class="error-message" id="loginPasswordError"></div>
+                        </div>
+                        <button type="submit" class="btn">Sign in</button>
+                    </form>
+                </div>
+
+                <div id="register" class="auth-tab-content">
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <input type="text" id="regName" placeholder="Your Name" required>
+                            <div class="error-message" id="regNameError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" id="regEmail" placeholder="Email" required>
+                            <div class="error-message" id="regEmailError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" id="regPassword" placeholder="Password (minimum 6 characters)" required>
+                            <div class="error-message" id="regPasswordError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" id="referralCode" placeholder="Referral Code (optional)">
+                        </div>
+
+                        <button type="submit" class="btn">Sign up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="review-toast" class="review-toast">Thank you for your review!</div>
+
+    <script src="/src/js/auth.js"></script>
+
+    <script>
+        const reviews = [
+            {
+                author: "Alex Peterson",
+                rating: 5,
+                date: "2025-03-15",
+                text: "Perfect combination of quality and style. The jacket fits perfectly, materials are top-notch. Delivery was faster than promised!",
+                helpful: 24
+            },
+            {
+                author: "Maria Johnson",
+                rating: 4,
+                date: "2025-02-12",
+                text: "Love the minimalist design, but wish there were more color options. Customer support quickly helped with a size exchange.",
+                helpful: 15
+            },
+            {
+                author: "Emily Smith",
+                rating: 5,
+                date: "2025-03-18",
+                text: "Ordered a basic t-shirt - perfect fit! The material is pleasant, didn't stretch after washing. Packed like a luxury brand, it's a pleasure to treat yourself to such things.",
+                helpful: 19
+            },
+            {
+                author: "Olivia Brown",
+                rating: 4,
+                date: "2025-04-11",
+                text: "The bomber jacket is just awesome! But the size was one and a half bigger, had to exchange. Support helped quickly - new size delivered in 3 days.",
+                helpful: 12
+            },
+            {
+                author: "Lucas Miller",
+                rating: 5,
+                date: "2025-02-12",
+                text: "Best hoodie in my wardrobe! Been wearing it for half a year - no pilling. Color as in the photo, neat seams. Now I buy all my basics here.",
+                helpful: 14
+            },
+            {
+                author: "Sophie Wilson",
+                rating: 4,
+                date: "2025-02-09",
+                text: "Shirt is good quality, but the fasteners are inconvenient. For the price, I expected more. Delivery was fast, that's a plus.",
+                helpful: 8
+            },
+            {
+                author: "Mary Anderson",
+                rating: 5,
+                date: "2025-05-09",
+                text: "First time ordering pants online - perfect fit! Thanks for the detailed size chart. Now I recommend you to all my friends.",
+                helpful: 11
+            },
+            {
+                author: "Ella Martinez",
+                rating: 5,
+                date: "2025-03-02",
+                text: "T-shirts exceeded expectations! Comfortable from the first try-on. Special thanks for the stylish packaging - felt like receiving a premium product.",
+                helpful: 13
+            },
+            {
+                author: "Benjamin Lee",
+                rating: 4,
+                date: "2025-04-28",
+                text: "The hoodie is great, but the color is a bit different from the photo. Thanks for the quick exchange - solved in 1 day!",
+                helpful: 15
+            },
+            {
+                author: "Charlotte Clark",
+                rating: 5,
+                date: "2025-05-18",
+                text: "Ordered a full basic wardrobe - 10 items. Everything arrived in one parcel, perfectly packed. Quality is on par with brands three times the price!",
+                helpful: 11
+            },
+            {
+                author: "Henry Walker",
+                rating: 3,
+                date: "2025-02-27",
+                text: "Sweater sheds after washing, even though the label says otherwise. Hope support helps with the return.",
+                helpful: 6
+            },
+            {
+                author: "Grace Hall",
+                rating: 5,
+                date: "2025-04-17",
+                text: "Best online experience! From selection to delivery - everything is well thought out. Courier called in advance, delivered right on time. Will definitely come back for more.",
+                helpful: 14
+            },
+            {
+                author: "Jack Young",
+                rating: 5,
+                date: "2025-05-11",
+                text: "Bomber is a dream! Warm, light, perfect fit. Been wearing for a month - still like new.",
+                helpful: 9
+            },
+            {
+                author: "Mia King",
+                rating: 4,
+                date: "2025-03-21",
+                text: "Good jeans, but the belt loops are inconvenient. Overall satisfied with the quality.",
+                helpful: 7
+            },
+            {
+                author: "William Wright",
+                rating: 5,
+                date: "2025-05-19",
+                text: "3rd order! Never let me down. Especially love the hoodies - thick fabric, don't stretch out.",
+                helpful: 13
+            },
+            {
+                author: "Ava Scott",
+                rating: 5,
+                text: "Fell in love with your concept! Minimalism + quality = perfect for a capsule wardrobe.",
+                helpful: 11
+            },
+            {
+                author: "Daniel Green",
+                rating: 4,
+                date: "2025-02-17",
+                text: "Great jacket, but the zipper sometimes sticks. Otherwise — super.",
+                helpful: 6
+            },
+            {
+                author: "Lily Adams",
+                rating: 5,
+                date: "2025-04-08",
+                text: "Order arrived in Estonia in 5 days! Couldn't find such quality basics anywhere else in Europe.",
+                helpful: 13
+            },
+            {
+                author: "Samantha Baker",
+                rating: 5,
+                date: "2025-03-07",
+                text: "Thanks for the cool merch boxes! Ordered a set with a t-shirt and socks — the packaging itself is a work of art.",
+                helpful: 16
+            }
+        ];
+
+        let currentPage = 1;
+        const perPage = 3;
+        let currentSort = 'Newest';
+
+        const reviewsGrid = document.querySelector('.reviews-grid');
+        const pagination = document.querySelector('.pagination');
+        const sortSelect = document.querySelector('.filter-select');
+
+        function renderReviews() {
+            let sorted = [...reviews];
+            if (currentSort === 'Newest') {
+                sorted.sort((a, b) => new Date(b.date) - new Date(a.date));
+            } else if (currentSort === 'Rating') {
+                sorted.sort((a, b) => b.rating - a.rating);
+            } else if (currentSort === 'Helpfulness') {
+                sorted.sort((a, b) => b.helpful - a.helpful);
+            }
+
+            const start = (currentPage - 1) * perPage;
+            const pageReviews = sorted.slice(start, start + perPage);
+
+            reviewsGrid.innerHTML = pageReviews.map((r) => `
+    <article class="review-card">
+        <div class="review-header">
+            <div class="author-info">
+                <h3>${r.author}</h3>
+                <div class="rating">
+                    ${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}
+                    <span class="date">${r.date ? r.date.split('-').reverse().join('.') : ''}</span>
+                </div>
+            </div>
+            ${r.verified ? '<div class="verified-badge">✔ Verified buyer</div>' : ''}
+        </div>
+        <div class="review-body">
+            <p>${r.text}</p>
+        </div>
+        <div class="review-footer">
+            <button class="helpful-btn" data-author="${encodeURIComponent(r.author)}" data-date="${r.date || ''}">👍 Helpful (${r.helpful})</button>
+        </div>
+    </article>
+`).join('');
+            renderPagination(sorted.length);
+
+            document.querySelectorAll('.helpful-btn').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const author = decodeURIComponent(btn.getAttribute('data-author'));
+                    const date = btn.getAttribute('data-date');
+                    const review = reviews.find(r => r.author === author && (r.date || '') === date);
+                    if (!review) return;
+                    if (btn.classList.contains('active')) {
+                        review.helpful -= 1;
+                        btn.classList.remove('active');
+                    } else {
+                        review.helpful += 1;
+                        btn.classList.add('active');
+                    }
+                    btn.textContent = `👍 Helpful (${review.helpful})`;
+                });
+            });
+        }
+
+        function renderPagination(total) {
+            const pages = Math.ceil(total / perPage);
+            let html = '';
+            for (let i = 1; i <= pages; i++) {
+                html += `<button class="page-btn${i === currentPage ? ' active' : ''}">${i}</button>`;
+            }
+            pagination.innerHTML = html;
+            pagination.querySelectorAll('.page-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    currentPage = +btn.textContent;
+                    renderReviews();
+                });
+            });
+        }
+
+        const reviewForm = document.querySelector('.review-form');
+        const formStars = reviewForm.querySelectorAll('.rating-input .star-btn');
+        let selectedRating = 0;
+
+        formStars.forEach((star, idx) => {
+            star.addEventListener('mouseenter', () => {
+                formStars.forEach((s, i) => {
+                    s.classList.toggle('hovered', i <= idx);
+                });
+            });
+            star.addEventListener('mouseleave', () => {
+                formStars.forEach((s, i) => {
+                    s.classList.remove('hovered');
+                });
+            });
+            star.addEventListener('click', () => {
+                selectedRating = idx + 1;
+                formStars.forEach((s, i) => {
+                    s.classList.toggle('selected', i < selectedRating);
+                });
+            });
+        });
+        reviewForm.querySelector('.rating-input .stars').addEventListener('mouseleave', () => {
+            formStars.forEach((s, i) => {
+                s.classList.remove('hovered');
+                s.classList.toggle('selected', i < selectedRating);
+            });
+        });
+
+        function showReviewToast(message) {
+            const toast = document.getElementById('review-toast');
+            toast.textContent = message;
+            toast.classList.add('active');
+            setTimeout(() => {
+                toast.classList.remove('active');
+            }, 2000);
+        }
+
+        reviewForm.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (selectedRating === 0) {
+                showReviewToast('Please select a rating!');
+                return;
+            }
+            showReviewToast('Thank you for your review!');
+            reviewForm.reset();
+            selectedRating = 0;
+            formStars.forEach(s => s.classList.remove('selected'));
+        });
+
+        sortSelect.addEventListener('change', e => {
+            currentSort = e.target.value;
+            currentPage = 1;
+            renderReviews();
+        });
+
+        renderReviews();
+    </script>
+</body>
+
+</html>

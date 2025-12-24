@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Returns — Dope Lab</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/src/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/src/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/src/favicon-16x16.png">
+    <link rel="manifest" href="/src/site.webmanifest">
+    <link rel="stylesheet" href="/src/css/index.css">
+    <script src="/src/js/geo.js"></script>
+    <style>
+        .return-policy {
+            padding: 40px 0;
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .policy-hero {
+            background: linear-gradient(45deg, #f9f9f9, #3d3d3d);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+
+        .policy-hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .policy-hero p {
+            font-size: 1.5rem;
+        }
+
+        .policy-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            margin: 50px 0;
+        }
+
+        .conditions-card {
+            background: var(--gray);
+            padding: 25px;
+            border-radius: 12px;
+        }
+
+        .conditions-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .return-steps li {
+            margin: 25px 0;
+            padding: 20px;
+            border-left: 4px solid var(--black);
+        }
+
+        .warranty-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-top: 35px;
+        }
+
+        .warranty-card {
+            text-align: center;
+            padding: 30px;
+            border: 1px solid #eee;
+            border-radius: 12px;
+        }
+
+        .warranty-icon {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .exceptions-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .return-contacts {
+            margin-top: 50px;
+            padding-top: 40px;
+            border-top: 1px solid #eee;
+        }
+
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 1200px) {
+
+            .policy-grid,
+            .warranty-grid,
+            .exceptions-list,
+            .contacts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .return-steps li {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .policy-hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .conditions-card {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .policy-hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .warranty-icon {
+                font-size: 2rem;
+            }
+        }
+
+        .return-policy {
+            font-size: 18px;
+            line-height: 1.7;
+        }
+
+        .policy-hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .policy-hero p {
+            font-size: 1.5rem;
+        }
+
+        .policy-block h2,
+        .warranty-section h2,
+        .exceptions-block h2,
+        .return-faq h2,
+        .return-contacts h2 {
+            font-size: 2rem;
+            margin: 3rem 0 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid #eee;
+        }
+
+        .conditions-card h3,
+        .return-steps h3,
+        .warranty-card h3,
+        .exception-item h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .conditions-list li,
+        .return-steps p,
+        .warranty-card p,
+        .exception-item p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        .exceptions-block {
+            padding-top: 2rem;
+        }
+
+        .return-faq {
+            padding-top: 2rem;
+        }
+
+        .return-contacts {
+            margin-top: 5rem;
+        }
+
+        @media (max-width: 1200px) {
+            .policy-hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .policy-block h2 {
+                font-size: 1.8rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .return-policy {
+                font-size: 17px;
+            }
+
+            .exceptions-block,
+            .return-faq {
+                margin-top: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .policy-hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .conditions-card h3 {
+                font-size: 1.3rem;
+            }
+
+            .exceptions-block,
+            .return-faq {
+                margin-top: 2.5rem;
+                padding-top: 1.5rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .return-policy {
+                font-size: 16px;
+            }
+
+            .policy-hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .policy-block h2 {
+                font-size: 1.5rem;
+            }
+
+            .exceptions-block,
+            .return-faq {
+                margin-top: 2rem;
+                padding-top: 1rem;
+            }
+        }
+
+        @media (max-width: 992px) {
+
+            .policy-grid,
+            .warranty-grid,
+            .exceptions-list,
+            .contacts-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .policy-hero {
+                padding: 40px 0;
+            }
+
+            .return-policy {
+                padding: 24px 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+                width: 100%;
+            }
+
+            .logo {
+                width: 100%;
+                text-align: left;
+                font-size: 20px;
+                margin-bottom: 10px;
+                padding-right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                gap: 0;
+            }
+
+            nav ul li {
+                margin: 10px 0 0 0;
+            }
+
+            .container {
+                padding: 0 8px;
+            }
+
+            .policy-hero {
+                padding: 24px 0;
+            }
+
+            .policy-hero h1 {
+                font-size: 1.5rem;
+            }
+
+            .policy-hero p {
+                font-size: 1.1rem;
+            }
+
+            .policy-block h2,
+            .warranty-section h2,
+            .exceptions-block h2,
+            .return-faq h2,
+            .return-contacts h2 {
+                font-size: 1.2rem;
+                margin: 2rem 0 1rem;
+                padding-top: 1rem;
+            }
+
+            .conditions-card,
+            .warranty-card,
+            .exception-item {
+                padding: 12px 6px;
+            }
+
+            .return-steps li {
+                padding: 10px;
+                margin: 12px 0;
+            }
+
+            .exceptions-list {
+                gap: 12px;
+            }
+
+            .warranty-grid {
+                gap: 12px;
+            }
+
+            .contacts-grid {
+                gap: 12px;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .footer-links a {
+                margin: 0 0 8px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .policy-hero {
+                padding: 12px 0;
+            }
+
+            .policy-hero h1 {
+                font-size: 1.1rem;
+            }
+
+            .policy-hero p {
+                font-size: 1rem;
+            }
+
+            .policy-block h2,
+            .warranty-section h2,
+            .exceptions-block h2,
+            .return-faq h2,
+            .return-contacts h2 {
+                font-size: 1rem;
+                margin: 1rem 0 0.5rem;
+                padding-top: 0.5rem;
+            }
+
+            .conditions-card,
+            .warranty-card,
+            .exception-item {
+                padding: 6px 2px;
+            }
+
+            .return-steps li {
+                padding: 6px;
+                margin: 8px 0;
+            }
+
+            .footer-links {
+                gap: 4px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">DOPE LAB</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Main page</a></li>
+                    <li><a href="/src/catalog.html">Catalog</a></li>
+                    <li><a href="pay.html">Payment</a></li>
+                    <li><a href="shipping.html">Shipping</a></li>
+                    <li><a href="return.html">Return policy</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
+                    <li>
+                        <div class="profile-dropdown">
+                            <a href="#" class="profile-icon">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
+                                        stroke="currentColor" stroke-width="2" />
+                                    <path
+                                        d="M20.5899 22C20.5899 18.13 16.7399 15 11.9999 15C7.25991 15 3.40991 18.13 3.40991 22"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                </svg>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a href="profile.html" class="dropdown-item">Profile</a>
+                                <a href="#" class="dropdown-item" id="logout-btn">Logout</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="cart.html" class="cart-icon">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M6 2L3 6V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22 20.0391 21.7893 20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V6L18 2H6Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M16 10C16 11.0609 15.5786 12.0783 14.8284 12.8284C14.0783 13.5786 13.0609 14 12 14C10.9391 14 9.92172 13.5786 9.17157 12.8284C8.42143 12.0783 8 11.0609 8 10"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            <span class="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="return-policy">
+        <section class="policy-hero">
+            <div class="container">
+                <h1>Warranty & Returns</h1>
+                <p>Transparent exchange and return conditions</p>
+            </div>
+        </section>
+
+        <section class="policy-content">
+            <div class="container">
+                <div class="policy-grid">
+                    <div class="policy-block">
+                        <h2>📜 Main Conditions</h2>
+                        <div class="conditions-card">
+                            <h3>14-day return</h3>
+                            <ul class="conditions-list">
+                                <li>✅ Item in original packaging</li>
+                                <li>✅ All tags and labels preserved</li>
+                                <li>✅ No signs of wear/use</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="policy-block">
+                        <h2>🔄 Return Process</h2>
+                        <ol class="return-steps">
+                            <li>
+                                <h3>Notification</h3>
+                                <p>Submit a request via technical support within 14 days</p>
+                            </li>
+                            <li>
+                                <h3>Confirmation</h3>
+                                <p>Our manager will contact you within 24 hours</p>
+                            </li>
+                            <li>
+                                <h3>Shipping</h3>
+                                <p>Send the item with the RMA invoice number</p>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="warranty-section">
+                    <h2>🔧 Warranty Obligations</h2>
+                    <div class="warranty-grid">
+                        <div class="warranty-card">
+                            <div class="warranty-icon">12</div>
+                            <h3>Months warranty</h3>
+                            <p>For all manufacturing defects</p>
+                        </div>
+                        <div class="warranty-card">
+                            <div class="warranty-icon">24</div>
+                            <h3>Hours response time</h3>
+                            <p>Average support response time</p>
+                        </div>
+                        <div class="warranty-card">
+                            <div class="warranty-icon">100%</div>
+                            <h3>Money back</h3>
+                            <p>If conditions are met</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="exceptions-block">
+                    <h2>🚫 Non-returnable Items</h2>
+                    <div class="exceptions-list">
+                        <div class="exception-item">
+                            <h3>Personalized items</h3>
+                            <p>Products with engraving or custom design</p>
+                        </div>
+                        <div class="exception-item">
+                            <h3>Discounted items</h3>
+                            <p>Labeled "Final Sale" or "As Is"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="return-faq">
+                    <h2>❔ Frequently Asked Questions</h2>
+                    <details class="faq-item">
+                        <summary>How can I track my return status?</summary>
+                        <p>Status is updated in your account. You will receive an email notification when the status
+                            changes.
+                        </p>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary>What if the item is damaged during delivery?</summary>
+                        <p>Immediately photograph the packaging and contents, and contact us within 48 hours.</p>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary>Can I exchange the size?</summary>
+                        <p>Yes, if the item is in stock. Free exchange within 30 days.</p>
+                    </details>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="reviews.html">Reviews</a>
+                <a href="support.html">Technical Support</a>
+                <a href="shipping.html">Shipping</a>
+                <a href="return.html">Return Policy</a>
+                <a href="pay.html">Payment</a>
+                <a href="refer.html">Referral Program</a>
+            </div>
+            <p class="copyright">© 2025 DOPE LAB.</p>
+        </div>
+    </footer>
+
+    <div id="modals-placeholder">
+        <div id="authModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+
+                <div class="auth-tabs">
+                    <button class="tab-btn active" data-tab="login">Login</button>
+                    <button class="tab-btn" data-tab="register">Register</button>
+                </div>
+
+                <div id="login" class="auth-tab-content active">
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <input type="email" id="loginEmail" placeholder="Email" required>
+                            <div class="error-message" id="loginEmailError"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="loginPassword" placeholder="Password" required>
+                            <div class="error-message" id="loginPasswordError"></div>
+                        </div>
+                        <button type="submit" class="btn">Sign in</button>
+                    </form>
+                </div>
+
+                <div id="register" class="auth-tab-content">
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <input type="text" id="regName" placeholder="Your Name" required>
+                            <div class="error-message" id="regNameError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" id="regEmail" placeholder="Email" required>
+                            <div class="error-message" id="regEmailError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" id="regPassword" placeholder="Password (minimum 6 characters)" required>
+                            <div class="error-message" id="regPasswordError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" id="referralCode" placeholder="Referral Code (optional)">
+                        </div>
+
+                        <button type="submit" class="btn">Sign up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/src/js/auth.js"></script>
+
+</body>
+
+</html>

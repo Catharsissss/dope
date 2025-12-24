@@ -1,0 +1,1154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product — Dope Lab</title>
+  <link rel="apple-touch-icon" sizes="180x180" href="/src/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/src/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/src/favicon-16x16.png">
+  <link rel="manifest" href="/src/site.webmanifest">
+  <link rel="stylesheet" href="/src/css/product.css">
+  <script src="/src/js/geo.js"></script>
+  <style>
+    .product-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .product-main-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 40px;
+    }
+
+    .product-bottom-section {
+      grid-column: 1 / -1;
+      max-width: 800px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    .product-info {
+      padding-top: 20px;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .buy-now-btn {
+      padding: 12px 24px;
+      background-color: var(--light-gray);
+      color: var(--black);
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      transition: opacity 0.3s;
+      width: 100%;
+    }
+
+    .quantity-selector {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .quantity-btn {
+      width: 30px;
+      height: 30px;
+      border: 1px solid var(--light-gray);
+      background: var(--gray);
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    .quantity-input {
+      width: 50px;
+      text-align: center;
+      height: 30px;
+      border: 1px solid var(--light-gray);
+    }
+
+    .color-options {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .color-option {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+    }
+
+    .color-option.selected {
+      border-color: var(--black);
+    }
+
+    .color-black {
+      background-color: var(--black);
+    }
+
+    .color-white {
+      background-color: var(--white);
+      border: 1px solid var(--light-gray);
+    }
+
+    .sold-count {
+      color: #666;
+      font-size: 14px;
+      margin-left: 15px;
+    }
+
+    #size-chart-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0 0 0;
+      font-size: 18px;
+      background: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+
+    #size-chart-table th,
+    #size-chart-table td {
+      padding: 14px 12px;
+      text-align: center;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    #size-chart-table th {
+      background: #f5f5f5;
+      font-weight: 600;
+      color: #222;
+      font-size: 18px;
+    }
+
+    #size-chart-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    @media (max-width: 600px) {
+
+      #size-chart-table th,
+      #size-chart-table td {
+        padding: 8px 4px;
+        font-size: 13px;
+      }
+    }
+
+    .main-image-container {
+      overflow: hidden;
+    }
+
+    .main-image {
+      transition: transform 0.3s cubic-bezier(.4, 2, .6, 1);
+      cursor: zoom-in;
+    }
+
+    .main-image:hover {
+      transform: scale(1.15);
+      z-index: 2;
+    }
+
+    .image-modal {
+      display: none;
+      position: fixed;
+      z-index: 10000;
+      left: 0;
+      top: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.85);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .image-modal.show {
+      display: flex !important;
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .image-modal-content {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 8px;
+      box-shadow: 0 4px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .close-image-modal {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      color: #fff;
+      font-size: 48px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 10001;
+      transition: color 0.2s;
+    }
+
+    .close-image-modal:hover {
+      color: #ffd700;
+    }
+
+    .modal-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #fff;
+      font-size: 48px;
+      font-weight: bold;
+      cursor: pointer;
+      z-index: 10001;
+      user-select: none;
+      padding: 0 20px;
+      transition: color 0.2s;
+    }
+
+    .modal-arrow-left {
+      left: 10px;
+    }
+
+    .modal-arrow-right {
+      right: 10px;
+    }
+
+    .modal-arrow:hover {
+      color: #ffd700;
+    }
+
+    #custom-notification.notification {
+      position: fixed;
+      top: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-40px);
+      z-index: 10000;
+      min-width: 320px;
+      max-width: 400px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      font-family: inherit;
+      padding: 0;
+    }
+
+    #custom-notification.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    #custom-notification .notification-content {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 18px 18px 18px;
+    }
+
+    #custom-notification .notification-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    #custom-notification .notification-message {
+      font-size: 15px;
+      color: #222;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    #custom-notification .close-notification {
+      background: none;
+      border: none;
+      color: #aaa;
+      font-size: 22px;
+      cursor: pointer;
+      position: absolute;
+      top: 8px;
+      right: 12px;
+      transition: color 0.2s;
+      z-index: 1;
+      padding: 0;
+      line-height: 1;
+    }
+
+    #custom-notification .close-notification:hover {
+      color: #e74c3c;
+    }
+
+    @media (max-width: 600px) {
+      #custom-notification.notification {
+        left: 10px;
+        right: 10px;
+        min-width: unset;
+        max-width: unset;
+        width: auto;
+        transform: translateY(-40px);
+      }
+
+      #custom-notification.show {
+        transform: translateY(0);
+      }
+
+      #custom-notification .notification-content {
+        padding: 12px 10px 12px 10px;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container header-content">
+      <a href="index.html" class="logo">DOPE LAB</a>
+      <nav>
+        <ul>
+          <li><a href="index.html">Main page</a></li>
+          <li><a href="/src/catalog.html">Catalog</a></li>
+          <li><a href="pay.html">Payment</a></li>
+          <li><a href="shipping.html">Shipping</a></li>
+          <li><a href="return.html">Return policy</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
+          <li>
+            <div class="profile-dropdown">
+              <a href="#" class="profile-icon">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
+                    stroke="currentColor" stroke-width="2" />
+                  <path d="M20.5899 22C20.5899 18.13 16.7399 15 11.9999 15C7.25991 15 3.40991 18.13 3.40991 22"
+                    stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </a>
+              <div class="dropdown-menu">
+                <a href="profile.html" class="dropdown-item">Profile</a>
+                <a href="#" class="dropdown-item" id="logout-btn">Logout</a>
+              </div>
+            </div>
+          </li>
+          <li>
+            <a href="cart.html" class="cart-icon">
+              <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M6 2L3 6V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22 20.0391 21.7893 20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V6L18 2H6Z"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                <path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round" />
+                <path
+                  d="M16 10C16 11.0609 15.5786 12.0783 14.8284 12.8284C14.0783 13.5786 13.0609 14 12 14C10.9391 14 9.92172 13.5786 9.17157 12.8284C8.42143 12.0783 8 11.0609 8 10"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <span class="cart-count">0</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+
+  <main>
+    <div class="container product-container">
+      <div class="product-main-section">
+        <div class="product-gallery">
+          <div class="thumbnails"></div>
+          <div class="main-image-container">
+            <img src="" alt="" class="main-image">
+          </div>
+        </div>
+
+        <div class="product-info">
+          <h1 id="product-name"></h1>
+
+          <div class="color-selector">
+            <span>Color - <span id="selected-color"></span></span>
+            <div class="color-options" id="color-options"></div>
+          </div>
+
+          <div class="price-section">
+            <span class="price" id="current-price"></span>
+          </div>
+
+          <div class="size-selector">
+            <h3>Size</h3>
+            <div class="sizes" id="sizes-container"></div>
+          </div>
+
+          <div class="quantity-selector">
+            <button class="quantity-btn minus">-</button>
+            <input type="number" class="quantity-input" value="1" min="1">
+            <button class="quantity-btn plus">+</button>
+          </div>
+
+          <div class="action-buttons">
+            <button class="add-to-cart-btn">Add to Cart - $<span id="add-to-cart-price"></span></button>
+            <button class="buy-now-btn">Buy it now</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="product-bottom-section">
+        <div class="details">
+          <h2>Description</h2>
+          <ul id="product-description-list"></ul>
+        </div>
+
+        <div class="details">
+          <h2>Size Chart</h2>
+          <table id="size-chart-table">
+            <tr>
+              <th>Size</th>
+              <th>Chest (inches)</th>
+              <th>Length (inches)</th>
+              <th>Sleeve (inches)</th>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <section class="also-like-section">
+      <h2>You may also like</h2>
+      <div class="also-like-grid" id="also-like-grid"></div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-links">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="reviews.html">Reviews</a>
+        <a href="support.html">Technical Support</a>
+        <a href="shipping.html">Shipping</a>
+        <a href="return.html">Return Policy</a>
+        <a href="pay.html">Payment</a>
+        <a href="refer.html">Referral Program</a>
+      </div>
+      <p class="copyright">© 2025 DOPE LAB.</p>
+    </div>
+  </footer>
+
+  <div id="purchase-notification" class="notification">
+    <div class="notification-content">
+      <button class="close-notification">&times;</button>
+      <p>👋 <span class="notification-text">Just bought <strong class="product-name">Product</strong> <span
+            class="notification-time">1 minute ago</span></span></p>
+    </div>
+  </div>
+
+  <div id="modals-placeholder">
+    <div id="authModal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="auth-tabs">
+          <button class="tab-btn active" data-tab="login">Login</button>
+          <button class="tab-btn" data-tab="register">Registration</button>
+        </div>
+
+        <div id="login" class="auth-tab-content active">
+          <form id="loginForm">
+            <div class="form-group">
+              <input type="email" id="loginEmail" placeholder="Email" required>
+              <div class="error-message" id="loginEmailError"></div>
+            </div>
+            <div class="form-group">
+              <input type="password" id="loginPassword" placeholder="Password" required>
+              <div class="error-message" id="loginPasswordError"></div>
+            </div>
+            <button type="submit" class="btn">Sign in</button>
+          </form>
+        </div>
+
+        <div id="register" class="auth-tab-content">
+          <form id="registerForm">
+            <div class="form-group">
+              <input type="text" id="regName" placeholder="Your Name" required>
+              <div class="error-message" id="regNameError"></div>
+            </div>
+            <div class="form-group">
+              <input type="email" id="regEmail" placeholder="Email" required>
+              <div class="error-message" id="regEmailError"></div>
+            </div>
+            <div class="form-group">
+              <input type="password" id="regPassword" placeholder="Password (minimum 6 characters)" required>
+              <div class="error-message" id="regPasswordError"></div>
+            </div>
+            <div class="form-group">
+              <input type="text" id="referralCode" placeholder="Referral Code (optional)">
+            </div>
+            <button type="submit" class="btn">Sign up</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="image-modal" class="image-modal" style="display:none;">
+    <span class="close-image-modal">&times;</span>
+    <span class="modal-arrow modal-arrow-left">&#8592;</span>
+    <img class="image-modal-content" id="image-modal-img" src="" alt="">
+    <span class="modal-arrow modal-arrow-right">&#8594;</span>
+  </div>
+
+  <script src="/src/js/auth.js"></script>
+
+  <script>
+    let products = [];
+    let currentProduct = null;
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let colorImages = {};
+    let notificationInterval;
+    let allProducts = [];
+
+    async function loadProductData() {
+      try {
+        const response = await fetch('/src/data/products.json');
+        const data = await response.json();
+        products = data.products;
+        return products;
+      } catch (error) {
+        console.error('Error loading product data:', error);
+        return [];
+      }
+    }
+
+    async function displayProduct() {
+
+      const sizeChartsByCategory = {
+        't-shirts': {
+          'XS': { chest_cm: '84-86', chest_in: '33-34', length_cm: '64-66', length_in: '25-26' },
+          'S': { chest_cm: '88-90', chest_in: '34.6-35.4', length_cm: '68-70', length_in: '26.7-27.5' },
+          'M': { chest_cm: '92-96', chest_in: '36.2-37.8', length_cm: '72-74', length_in: '28.3-29.1' },
+          'L': { chest_cm: '100-104', chest_in: '39.4-40.9', length_cm: '76-78', length_in: '29.9-30.7' },
+          'XL': { chest_cm: '108-112', chest_in: '42.5-44.1', length_cm: '80-82', length_in: '31.5-32.3' },
+          'XXL': { chest_cm: '116-120', chest_in: '45.7-47.2', length_cm: '84-86', length_in: '33-33.8' }
+        },
+        'hoodies': {
+          'XS': { chest_cm: '88-90', chest_in: '34.6-35.4', length_cm: '64-66', length_in: '25-26', sleeve_cm: '58-60', sleeve_in: '22.8-23.6' },
+          'S': { chest_cm: '94-96', chest_in: '37-37.8', length_cm: '68-70', length_in: '26.7-27.5', sleeve_cm: '62-64', sleeve_in: '24.4-25.2' },
+          'M': { chest_cm: '100-104', chest_in: '39.4-40.9', length_cm: '72-74', length_in: '28.3-29.1', sleeve_cm: '66-68', sleeve_in: '26-26.7' },
+          'L': { chest_cm: '108-112', chest_in: '42.5-44.1', length_cm: '76-78', length_in: '29.9-30.7', sleeve_cm: '70-72', sleeve_in: '27.5-28.3' },
+          'XL': { chest_cm: '116-120', chest_in: '45.7-47.2', length_cm: '80-82', length_in: '31.5-32.3', sleeve_cm: '74-76', sleeve_in: '29.1-29.9' },
+          'XXL': { chest_cm: '124-128', chest_in: '48.8-50.4', length_cm: '84-86', length_in: '33-33.8', sleeve_cm: '78-80', sleeve_in: '30.7-31.5' }
+        },
+        'pants': {
+          'XS': { waist_cm: '68-72', waist_in: '26.7-28.3', hips_cm: '84-88', hips_in: '33-34.6', inseam_cm: '76-78', inseam_in: '29.9-30.7' },
+          'S': { waist_cm: '76-80', waist_in: '29.9-31.5', hips_cm: '90-94', hips_in: '35.4-37', inseam_cm: '79-81', inseam_in: '31.1-31.9' },
+          'M': { waist_cm: '84-88', waist_in: '33-34.6', hips_cm: '98-102', hips_in: '38.6-40.1', inseam_cm: '82-84', inseam_in: '32.3-33' },
+          'L': { waist_cm: '92-96', waist_in: '36.2-37.8', hips_cm: '106-110', hips_in: '41.7-43.3', inseam_cm: '85-87', inseam_in: '33.4-34.2' },
+          'XL': { waist_cm: '100-104', waist_in: '39.4-40.9', hips_cm: '114-118', hips_in: '44.9-46.4', inseam_cm: '88-90', inseam_in: '34.6-35.4' },
+          'XXL': { waist_cm: '108-112', waist_in: '42.5-44.1', hips_cm: '122-126', hips_in: '48-49.6', inseam_cm: '91-93', inseam_in: '35.8-36.6' }
+        },
+        'anime-jackets': {
+          'XS': { chest_cm: '90-92', chest_in: '35.4-36.2', length_cm: '60-62', length_in: '23.6-24.4', sleeve_cm: '60-62', sleeve_in: '23.6-24.4' },
+          'S': { chest_cm: '96-100', chest_in: '37.8-39.4', length_cm: '64-66', length_in: '25.2-26', sleeve_cm: '64-66', sleeve_in: '25.2-26' },
+          'M': { chest_cm: '104-108', chest_in: '40.9-42.5', length_cm: '68-70', length_in: '26.7-27.5', sleeve_cm: '68-70', sleeve_in: '26.7-27.5' },
+          'L': { chest_cm: '112-116', chest_in: '44.1-45.7', length_cm: '72-74', length_in: '28.3-29.1', sleeve_cm: '72-74', sleeve_in: '28.3-29.1' },
+          'XL': { chest_cm: '120-124', chest_in: '47.2-48.8', length_cm: '76-78', length_in: '29.9-30.7', sleeve_cm: '76-78', sleeve_in: '29.9-30.7' },
+          'XXL': { chest_cm: '128-132', chest_in: '50.4-52', length_cm: '80-82', length_in: '31.5-32.3', sleeve_cm: '80-82', sleeve_in: '31.5-32.3' }
+        }
+      };
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const productId = urlParams.get('id');
+
+      await loadProductData();
+
+      currentProduct = products.find(item => item.id == productId);
+
+      if (!currentProduct) {
+        document.querySelector('.product-page').innerHTML = `
+          <div class="container">
+            <h1>Product Not Found</h1>
+            <a href="catalog.html">Back to Catalog</a>
+          </div>
+        `;
+        return;
+      }
+
+      document.title = `${currentProduct.name} — Dope Lab`;
+
+      document.getElementById('product-name').textContent = currentProduct.name;
+      document.getElementById('product-name').textContent = currentProduct.name;
+
+      const descList = document.getElementById('product-description-list');
+      descList.innerHTML = '';
+      if (currentProduct.description) {
+        const params = [
+          'Occasion',
+          'Design',
+          'Pattern Type',
+          'Style',
+          'Sleeve Length',
+          'Season'
+        ];
+        params.forEach(param => {
+          const match = currentProduct.description.match(new RegExp(`${param}\\s*:\\s*([^;]+)`, 'i'));
+          if (match) {
+            const li = document.createElement('li');
+            li.textContent = `${param} : ${match[1].trim()}`;
+            descList.appendChild(li);
+          }
+        });
+      }
+
+      document.getElementById('current-price').textContent = `$${currentProduct.price.toFixed(2)}`;
+      document.getElementById('add-to-cart-price').textContent = currentProduct.price.toFixed(2);
+
+      initColorImages();
+
+      const colorOptionsContainer = document.getElementById('color-options');
+      const selectedColorSpan = document.getElementById('selected-color');
+
+      if (currentProduct.colorOptions && currentProduct.colorOptions.length > 0) {
+        const firstColor = currentProduct.colorOptions[0].color;
+        selectedColorSpan.textContent = firstColor;
+
+        currentProduct.colorOptions.forEach(option => {
+          const colorOption = document.createElement('div');
+          colorOption.className = `color-option color-${option.color.toLowerCase()}`;
+          colorOption.dataset.color = option.color;
+
+          colorOption.onclick = () => {
+            document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('selected'));
+            colorOption.classList.add('selected');
+            selectedColorSpan.textContent = option.color;
+            loadImagesForColor(option.color);
+          };
+
+          colorOptionsContainer.appendChild(colorOption);
+        });
+
+        const firstColorOption = document.querySelector(`.color-option.color-${firstColor.toLowerCase()}`);
+        if (firstColorOption) {
+          firstColorOption.classList.add('selected');
+        }
+
+        loadImagesForColor(firstColor);
+      } else {
+        selectedColorSpan.textContent = 'N/A';
+      }
+
+      const sizesContainer = document.getElementById('sizes-container');
+
+      if (currentProduct.sizes && currentProduct.sizes.length > 0) {
+        sizesContainer.innerHTML = '';
+
+        currentProduct.sizes.forEach(size => {
+          const sizeElement = document.createElement('div');
+          sizeElement.className = 'size';
+          sizeElement.textContent = size;
+          sizeElement.onclick = function () {
+            if (this.classList.contains('selected')) {
+              this.classList.remove('selected');
+            } else {
+              document.querySelectorAll('.size').forEach(s => s.classList.remove('selected'));
+              this.classList.add('selected');
+            }
+          };
+          sizesContainer.appendChild(sizeElement);
+        });
+      }
+
+      const category = currentProduct.category || 't-shirts';
+      const sizeChartData = sizeChartsByCategory[category];
+
+      const sizeChartTable = document.getElementById('size-chart-table');
+
+      while (sizeChartTable.rows.length > 1) {
+        sizeChartTable.deleteRow(1);
+      }
+
+      let headers = [];
+      if (category === 't-shirts') {
+        headers = ['Size', 'Chest (cm)', 'Chest (in)', 'Length (cm)', 'Length (in)'];
+      } else if (category === 'hoodies' || category === 'anime-jackets' || category === 'oversize-hoodie') {
+        headers = ['Size', 'Chest (cm)', 'Chest (in)', 'Length (cm)', 'Length (in)', 'Sleeve (cm)', 'Sleeve (in)'];
+      } else if (category === 'pants') {
+        headers = ['Size', 'Waist (cm)', 'Waist (in)', 'Hips (cm)', 'Hips (in)', 'Inseam (cm)', 'Inseam (in)'];
+      }
+
+      const headerRow = sizeChartTable.rows[0];
+      while (headerRow.cells.length > 0) headerRow.deleteCell(0);
+      headers.forEach(h => {
+        const th = document.createElement('th');
+        th.textContent = h;
+        headerRow.appendChild(th);
+      });
+
+      currentProduct.sizes.forEach(size => {
+        const data = sizeChartData[size];
+        if (!data) return;
+        const row = sizeChartTable.insertRow();
+        if (category === 't-shirts') {
+          row.insertCell(0).textContent = size;
+          row.insertCell(1).textContent = data.chest_cm;
+          row.insertCell(2).textContent = data.chest_in;
+          row.insertCell(3).textContent = data.length_cm;
+          row.insertCell(4).textContent = data.length_in;
+        } else if (category === 'hoodies' || category === 'anime-jackets' || category === 'oversize-hoodie') {
+          row.insertCell(0).textContent = size;
+          row.insertCell(1).textContent = data.chest_cm;
+          row.insertCell(2).textContent = data.chest_in;
+          row.insertCell(3).textContent = data.length_cm;
+          row.insertCell(4).textContent = data.length_in;
+          row.insertCell(5).textContent = data.sleeve_cm;
+          row.insertCell(6).textContent = data.sleeve_in;
+        } else if (category === 'pants') {
+          row.insertCell(0).textContent = size;
+          row.insertCell(1).textContent = data.waist_cm;
+          row.insertCell(2).textContent = data.waist_in;
+          row.insertCell(3).textContent = data.hips_cm;
+          row.insertCell(4).textContent = data.hips_in;
+          row.insertCell(5).textContent = data.inseam_cm;
+          row.insertCell(6).textContent = data.inseam_in;
+        }
+      });
+    }
+
+    function showAlsoLikeProducts() {
+      if (!products || !products.length) return;
+      if (!currentProduct) return;
+
+      const otherProducts = products.filter(p => p.id != currentProduct.id);
+
+      const shuffled = otherProducts.sort(() => 0.5 - Math.random());
+
+      const itemsToShow = window.innerWidth <= 768 ? 3 : 4;
+      const toShow = shuffled.slice(0, itemsToShow);
+
+      const grid = document.getElementById('also-like-grid');
+      if (!grid) return;
+
+      grid.innerHTML = toShow.map(product => {
+        let img = '';
+        if (product.colorOptions?.[0]?.images?.[0]) {
+          img = product.colorOptions[0].images[0];
+        } else if (product.images?.[0]) {
+          img = product.images[0];
+        } else {
+          img = 'placeholder.jpg';
+        }
+        return `
+      <div class="also-like-card">
+        <a href="product.html?id=${product.id}">
+          <img src="/src/images/${img}" alt="${product.name}" onerror="this.src='/src/images/placeholder.jpg'">
+          <h3>${product.name}</h3>
+          <div class="price">${product.price.toFixed(2)} $</div>
+        </a>
+      </div>
+    `;
+      }).join('');
+
+      setTimeout(() => {
+        document.querySelectorAll('.also-like-card').forEach(card => {
+          const img = card.querySelector('img');
+          const href = card.querySelector('a')?.getAttribute('href') || '';
+          const productId = href.match(/id=(\d+)/)?.[1];
+          if (!productId) return;
+
+          const product = products.find(p => p.id == productId);
+          if (!product) return;
+
+          let images = [];
+          if (product.colorOptions && product.colorOptions.length > 0) {
+            images = product.colorOptions[0].images;
+          }
+          if (!images.length && product.images) {
+            images = product.images;
+          }
+
+          if (images.length > 1) {
+            card.addEventListener('mouseenter', () => {
+              img.dataset.original = img.src;
+              img.src = '/src/images/' + images[1];
+            });
+            card.addEventListener('mouseleave', () => {
+              img.src = img.dataset.original;
+            });
+          } else {
+            card.addEventListener('mouseenter', () => {
+              img.style.transform = 'scale(1.07)';
+              img.style.transition = 'transform 0.3s';
+            });
+            card.addEventListener('mouseleave', () => {
+              img.style.transform = '';
+            });
+          }
+        });
+      }, 200);
+    }
+
+    async function showRandomPurchaseNotification() {
+      try {
+        const notification = document.getElementById('purchase-notification');
+        if (!notification) {
+          console.error('Notification element not found');
+          return;
+        }
+
+        const isAnyModalOpen = document.querySelector('.modal[style*="display: block"]');
+        if (isAnyModalOpen) {
+          return;
+        }
+
+        if (allProducts.length === 0) {
+          const response = await fetch('/src/data/products.json');
+          const data = await response.json();
+          allProducts = data.products || [];
+        }
+
+        if (allProducts.length === 0) return;
+
+        const randomProduct = allProducts[Math.floor(Math.random() * allProducts.length)];
+
+        let productImage = '';
+        if (randomProduct.colorOptions?.[0]?.images?.[0]) {
+          productImage = randomProduct.colorOptions[0].images[0];
+        } else if (randomProduct.images?.[0]) {
+          productImage = randomProduct.images[0];
+        }
+
+        notification.innerHTML = `
+      <div class="notification-content">
+        <button class="close-notification">&times;</button>
+        <div class="notification-body" data-id="${randomProduct.id}">
+          <img src="/src/images/${productImage}" alt="${randomProduct.name}" 
+               onerror="this.src='/src/images/placeholder.jpg'" 
+               class="notification-image">
+          <div class="notification-text">
+            <p class="notification-message">Just purchased</p>
+            <p class="product-name">${randomProduct.name}</p>
+            <p class="notification-time">Click to see</p>
+          </div>
+        </div>
+      </div>
+    `;
+
+        notification.querySelector('.notification-body').addEventListener('click', function () {
+          window.location.href = `/src/product.html?id=${this.dataset.id}`;
+        });
+
+        notification.querySelector('.close-notification').addEventListener('click', (e) => {
+          e.stopPropagation();
+          notification.classList.remove('show');
+        });
+
+        notification.classList.add('show');
+
+        setTimeout(() => {
+          notification.classList.remove('show');
+        }, 7000);
+
+      } catch (error) {
+        console.error('Error in notification:', error);
+      }
+    }
+
+    function initPurchaseNotifications() {
+      if (notificationInterval) {
+        clearInterval(notificationInterval);
+      }
+
+      setTimeout(() => {
+        showRandomPurchaseNotification();
+
+        notificationInterval = setInterval(() => {
+          showRandomPurchaseNotification();
+        }, (Math.floor(Math.random() * 20) + 10) * 1000);
+      }, 10000);
+    }
+
+    function initColorImages() {
+
+      currentProduct.colorOptions.forEach(option => {
+        colorImages[option.color] = option.images;
+      });
+    }
+
+    function loadImagesForColor(color) {
+      const thumbnailsContainer = document.querySelector('.thumbnails');
+      const mainImage = document.querySelector('.main-image');
+
+      thumbnailsContainer.innerHTML = '';
+
+      const imagesForColor = colorImages[color] || currentProduct.images;
+
+      imagesForColor.forEach((image, index) => {
+        const img = document.createElement('img');
+        img.src = `/src/images/${image}`;
+        img.alt = `${currentProduct.name} ${index + 1} (${color})`;
+        img.onclick = () => {
+          mainImage.src = `/src/images/${image}`;
+          mainImage.alt = img.alt;
+        };
+        thumbnailsContainer.appendChild(img);
+      });
+
+      if (imagesForColor.length > 0) {
+        mainImage.src = `/src/images/${imagesForColor[0]}`;
+        mainImage.alt = `${currentProduct.name} 1 (${color})`;
+      }
+    }
+
+    function updateCartCounter() {
+      const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+      document.querySelector('.cart-count').textContent = count;
+    }
+
+    function updateCart() {
+      localStorage.setItem('cart', JSON.stringify(cart));
+      updateCartCounter();
+    }
+
+    function addToCart(productId, quantity = 1, size = null, color = null) {
+      const product = products.find(p => p.id == productId);
+      if (!product) return;
+
+      let productImage = '';
+      if (color && product.colorOptions) {
+        const colorOption = product.colorOptions.find(
+          opt => opt.color.toLowerCase() === color.toLowerCase()
+        );
+        productImage = colorOption ? colorOption.images[0] : product.colorOptions[0].images[0];
+      } else if (product.colorOptions) {
+        productImage = product.colorOptions[0].images[0];
+      } else {
+        productImage = product.images?.[0] || '';
+      }
+
+      const existingItemIndex = cart.findIndex(item =>
+        item.id == productId &&
+        item.size == size &&
+        item.color == color
+      );
+
+      if (existingItemIndex >= 0) {
+        cart[existingItemIndex].quantity += quantity;
+      } else {
+        cart.push({
+          id: product.id,
+          name: product.name,
+          price: product.price,
+          image: productImage,
+          quantity: quantity,
+          size: size,
+          color: color
+        });
+      }
+
+      updateCart();
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      await displayProduct();
+      setTimeout(() => {
+        showAlsoLikeProducts();
+      }, 100);
+      updateCartCounter();
+      initPurchaseNotifications();
+
+      let modalImages = [];
+      let modalCurrentIndex = 0;
+
+      function getImageSrc(img) {
+        if (img.startsWith('/') || img.startsWith('http')) return img;
+        return `/src/images/${img}`;
+      }
+
+      function openImageModal(images, index) {
+        modalImages = images;
+        modalCurrentIndex = index;
+        const modal = document.getElementById('image-modal');
+        const modalImg = document.getElementById('image-modal-img');
+
+        modalImg.src = getImageSrc(modalImages[modalCurrentIndex]);
+        modal.style.display = 'flex';
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function showModalImage(index) {
+        if (!modalImages.length) return;
+        modalCurrentIndex = (index + modalImages.length) % modalImages.length;
+        const modalImg = document.getElementById('image-modal-img');
+        modalImg.src = getImageSrc(modalImages[modalCurrentIndex]);
+      }
+
+      document.querySelector('.main-image').addEventListener('click', function () {
+        const selectedColorElement = document.querySelector('#selected-color');
+        const selectedColor = selectedColorElement ? selectedColorElement.textContent : null;
+
+        let images = [];
+        if (selectedColor && colorImages[selectedColor]) {
+          images = colorImages[selectedColor];
+        } else if (currentProduct && currentProduct.images) {
+          images = currentProduct.images;
+        }
+
+        if (images.length === 0) {
+          console.error('No images found for modal');
+          return;
+        }
+
+        const currentSrc = this.src.split('/').pop();
+        let currentIndex = images.findIndex(img => currentSrc.includes(img));
+        if (currentIndex === -1) currentIndex = 0;
+
+        openImageModal(images, currentIndex);
+      });
+
+      document.querySelector('.modal-arrow-left').addEventListener('click', function (e) {
+        e.stopPropagation();
+        showModalImage(modalCurrentIndex - 1);
+      });
+
+      document.querySelector('.modal-arrow-right').addEventListener('click', function (e) {
+        e.stopPropagation();
+        showModalImage(modalCurrentIndex + 1);
+      });
+
+      document.querySelector('.close-image-modal').addEventListener('click', function () {
+        const modal = document.getElementById('image-modal');
+        modal.classList.remove('show');
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+      });
+
+      document.getElementById('image-modal').addEventListener('click', function (e) {
+        if (e.target === this) {
+          this.classList.remove('show');
+          this.style.display = 'none';
+          document.body.style.overflow = '';
+        }
+      });
+
+      document.querySelector('.quantity-btn.minus').addEventListener('click', function () {
+        const input = document.querySelector('.quantity-input');
+        if (input.value > 1) input.value--;
+        updateAddToCartPrice();
+      });
+
+      document.querySelector('.quantity-btn.plus').addEventListener('click', function () {
+        const input = document.querySelector('.quantity-input');
+        input.value++;
+        updateAddToCartPrice();
+      });
+
+      document.querySelector('.quantity-input').addEventListener('change', function () {
+        if (this.value < 1) this.value = 1;
+        updateAddToCartPrice();
+      });
+
+      function updateAddToCartPrice() {
+        const quantity = document.querySelector('.quantity-input').value;
+        const price = currentProduct.price;
+        const total = (price * quantity).toFixed(2);
+        document.querySelector('.add-to-cart-btn').textContent = `Add to Cart - $${total}`;
+      }
+
+      document.querySelector('.add-to-cart-btn').addEventListener('click', function () {
+        if (!currentProduct) return;
+
+        const selectedSize = document.querySelector('.size.selected');
+        const selectedColorElement = document.querySelector('.color-option.selected');
+        const selectedColor = selectedColorElement ? selectedColorElement.dataset.color : null;
+        const quantity = parseInt(document.querySelector('.quantity-input').value);
+
+        if (currentProduct.sizes.length > 0 && !selectedSize) {
+          showCustomNotification('Please select a size');
+          return;
+        }
+        if (currentProduct.colorOptions.length > 0 && !selectedColor) {
+          showCustomNotification('Please select a color');
+          return;
+        }
+
+        addToCart(
+          currentProduct.id,
+          quantity,
+          selectedSize ? selectedSize.textContent : null,
+          selectedColor
+        );
+
+        updateCartCounter();
+        showCustomNotification('Product added to cart!');
+      })
+
+      document.querySelector('.buy-now-btn').addEventListener('click', function () {
+        if (!currentProduct) return;
+
+        const selectedSize = document.querySelector('.size.selected');
+        const selectedColorElement = document.querySelector('.color-option.selected');
+        const selectedColor = selectedColorElement ? selectedColorElement.dataset.color : null;
+        const quantity = parseInt(document.querySelector('.quantity-input').value);
+
+        if (currentProduct.sizes.length > 0 && !selectedSize) {
+          showCustomNotification('Please select a size');
+          return;
+        }
+        if (currentProduct.colorOptions.length > 0 && !selectedColor) {
+          showCustomNotification('Please select a color');
+          return;
+        }
+
+        cart = [];
+        addToCart(
+          currentProduct.id,
+          quantity,
+          selectedSize ? selectedSize.textContent : null,
+          selectedColor
+        );
+
+        updateCartCounter();
+        window.location.href = 'cart.html';
+      });
+    });
+
+    function showCustomNotification(message) {
+      let notification = document.getElementById('custom-notification');
+      if (!notification) {
+        notification = document.createElement('div');
+        notification.id = 'custom-notification';
+        notification.className = 'notification show';
+        notification.innerHTML = `
+      <div class="notification-content">
+        <button class="close-notification">&times;</button>
+        <div class="notification-text">
+          <p class="notification-message">${message}</p>
+        </div>
+      </div>
+    `;
+        document.body.appendChild(notification);
+        notification.querySelector('.close-notification').onclick = () => {
+          notification.classList.remove('show');
+        };
+      } else {
+        notification.querySelector('.notification-message').textContent = message;
+        notification.classList.add('show');
+      }
+      setTimeout(() => {
+        notification.classList.remove('show');
+      }, 3000);
+    }
+    window.addEventListener('resize', () => {
+      showAlsoLikeProducts();
+    });
+  </script>
+</body>
+
+</html>

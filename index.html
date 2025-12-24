@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dope Lab</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/src/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/src/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/src/favicon-16x16.png">
+    <link rel="manifest" href="/src/site.webmanifest">
+    <link rel="stylesheet" href="/src/css/index.css">
+    <script src="/src/js/geo.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">DOPE LAB</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Main page</a></li>
+                    <li><a href="/src/catalog.html">Catalog</a></li>
+                    <li><a href="pay.html">Payment</a></li>
+                    <li><a href="shipping.html">Shipping</a></li>
+                    <li><a href="return.html">Return policy</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
+                    <li>
+                        <div class="profile-dropdown">
+                            <a href="#" class="profile-icon">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
+                                        stroke="currentColor" stroke-width="2" />
+                                    <path
+                                        d="M20.5899 22C20.5899 18.13 16.7399 15 11.9999 15C7.25991 15 3.40991 18.13 3.40991 22"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                </svg>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a href="profile.html" class="dropdown-item">Profile</a>
+                                <a href="#" class="dropdown-item" id="logout-btn">Log out</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="cart.html" class="cart-icon">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M6 2L3 6V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22 20.0391 21.7893 20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V6L18 2H6Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M16 10C16 11.0609 15.5786 12.0783 14.8284 12.8284C14.0783 13.5786 13.0609 14 12 14C10.9391 14 9.92172 13.5786 9.17157 12.8284C8.42143 12.0783 8 11.0609 8 10"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            <span class="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Claim Your Urban Crown</h1>
+                <p>Bold logos, louder statements — where street cred meets premium craft. Wear the culture.</p>
+                <a href="catalog.html" class="btn">Shop now</a>
+            </div>
+        </section>
+
+        <section class="featured">
+            <div class="container">
+                <h2 class="section-title">Popular products</h2>
+
+                <div class="featured-slider">
+                    <div class="slider-container">
+                        <div class="slide loading">
+                            <p>Загрузка популярных товаров...</p>
+                        </div>
+                    </div>
+
+                    <div class="slider-nav">
+                        <button class="slider-button prev-slide">&lt;</button>
+                        <button class="slider-button next-slide">&gt;</button>
+                    </div>
+
+                    <div class="slider-indicators">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="advantages">
+            <div class="container">
+                <h2 class="section-title">Why shop with us?</h2>
+
+                <div class="advantages-grid">
+                    <div class="advantage-card">
+                        <div class="advantage-icon">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
+                                <path d="M8 12L11 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <h3>Carefully selected style collection</h3>
+                        <p>Explore a handpicked selection of essentials for a clean and timeless wardrobe.</p>
+                    </div>
+
+                    <div class="advantage-card">
+                        <div class="advantage-icon">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M20.24 12.24C21.3658 11.1142 21.9983 9.58722 21.9983 7.99501C21.9983 6.40279 21.3658 4.87585 20.24 3.75C19.1142 2.62415 17.5872 1.99171 15.995 1.99171C14.4028 1.99171 12.8758 2.62415 11.75 3.75L5 10.5V19H13.5L20.24 12.24Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M16 8L2 22" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M17.5 15H9" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <h3>Referral Program</h3>
+                        <p>We award bonuses for your friends' purchases.</p>
+                    </div>
+
+                    <div class="advantage-card">
+                        <div class="advantage-icon">
+                            <img class="cryproicon" src="/src/images/currency/currency.svg" alt="Cryptocurrency">
+                        </div>
+                        <h3>Pay with cryptocurrency</h3>
+                        <p>Pay for orders with cryptocurrency from anywhere in the world.</p>
+                    </div>
+
+                    <div class="advantage-card">
+                        <div class="advantage-icon">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M20 7H4C2.89543 7 2 7.89543 2 9V19C2 20.1046 2.89543 21 4 21H20C21.1046 21 22 20.1046 22 19V9C22 7.89543 21.1046 7 20 7Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M16 21V5C16 4.46957 15.7893 3.96086 15.4142 3.58579C15.0391 3.21071 14.5304 3 14 3H10C9.46957 3 8.96086 3.21071 8.58579 3.58579C8.21071 3.96086 8 4.46957 8 5V21"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <h3>Exclusive Seasonal Drops</h3>
+                        <p>Stay ahead with our limited edition releases, blending style with contemporary trends.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials">
+            <div class="container">
+                <h2 class="section-title">Customer Insights</h2>
+
+                <div class="testimonials-slider">
+                    <div class="slider-container">
+                        <div class="testimonial-slide active">
+                            <div class="testimonial-content">
+                                <p class="testimonial-text">Here they found the perfect balance between bold design and
+                                    practicality. Things do not lose their appearance after months of active wear, and
+                                    hidden functional elements surprise even after long use. I especially appreciate
+                                    exclusivity - I feel that my style is impossible to repeat. Delivery is always on
+                                    time, and the packaging has become part of my interior.</p>
+                                <p class="testimonial-author">- Lisa Turner</p>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-slide">
+                            <div class="testimonial-content">
+                                <p class="testimonial-text">Here they understand that style is not only about
+                                    appearance, but also about feelings. The clothes fit perfectly, as if they were
+                                    tailored to my measurements, and the fabrics breathe even in the heat. I appreciate
+                                    that each collection tells a story - I want to collect them like art albums. And
+                                    yes, their notification system for new items is brilliant: I am always among the
+                                    first!</p>
+                                <p class="testimonial-author">- Michael Chen</p>
+                            </div>
+                        </div>
+
+                        <div class="testimonial-slide">
+                            <div class="testimonial-content">
+                                <p class="testimonial-text">This is not a store, but a laboratory of urban style. There
+                                    is no mass production here - only well-thought-out models that become the basis for
+                                    dozens of looks. The attention to detail is amazing: from unusual accessories to
+                                    transformable labels. After buying, it seems that you have become part of a closed
+                                    club of the chosen ones - such energy is rarely encountered.
+                                </p>
+                                <p class="testimonial-author">- Sarah Williams</p>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="reviews.html" class="btn-review">See all reviews</a>
+
+                    <div class="testimonial-nav">
+                        <button class="nav-button prev-testimonial">&lt;</button>
+                        <button class="nav-button next-testimonial">&gt;</button>
+                    </div>
+
+                    <div class="testimonial-indicators">
+                        <span class="indicator active"></span>
+                        <span class="indicator"></span>
+                        <span class="indicator"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="discover-section">
+            <div class="discover-content">
+                <h2>Discover Your Style</h2>
+                <p>Redefine your wardrobe with timeless pieces that exude style and sophistication. Explore our curated
+                    collection today and redefine your style sensibility.</p>
+                <a href="catalog.html" class="btn-white">Browse Collection</a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="reviews.html">Reviews</a>
+                <a href="support.html">Technical Support</a>
+                <a href="shipping.html">Shipping</a>
+                <a href="return.html">Return Policy</a>
+                <a href="pay.html">Payment</a>
+                <a href="refer.html">Referral Program</a>
+            </div>
+            <p class="copyright">© 2025 DOPE LAB.</p>
+        </div>
+    </footer>
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="modal-product-name">Product Name</h2>
+            <img id="modal-product-image" src="" alt="" class="modal-product-image">
+            <div id="modal-thumbnails" class="modal-thumbnails"></div>
+
+            <div class="modal-options">
+                <div class="option-group">
+                    <label>Color:</label>
+                    <div id="color-options" class="options-container"></div>
+                </div>
+
+                <div class="option-group">
+                    <label>Size:</label>
+                    <div id="size-options" class="options-container"></div>
+                </div>
+
+                <div class="option-group">
+                    <label>Quantity:</label>
+                    <div class="quantity-selector">
+                        <button class="quantity-btn minus">-</button>
+                        <span class="quantity-value">1</span>
+                        <button class="quantity-btn plus">+</button>
+                    </div>
+                </div>
+            </div>
+
+            <button id="add-to-cart-modal" class="add-to-cart-btn">Add to Cart</button>
+        </div>
+    </div>
+    <div id="purchase-notification" class="notification">
+        <div class="notification-content">
+            <button class="close-notification">&times;</button>
+            <p>👋 <span class="notification-text">Just purchased <strong class="product-name">Product</strong> <span
+                        class="notification-time">1 minute ago</span></span></p>
+        </div>
+    </div>
+    
+    <div id="modals-placeholder"></div>
+    <script>
+        // Load modals
+        fetch('/src/auth-modal.html')
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('modals-placeholder').innerHTML = html;
+                // Initialize authentication system
+                if (typeof initAuthSystem === 'function') {
+                    initAuthSystem();
+                }
+            });
+    </script>
+    <script src="/src/js/app.js"></script>
+    <script>
+        // Testimonials Slider JavaScript
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize the testimonials slider
+            initTestimonialsSlider();
+        });
+
+        function initTestimonialsSlider() {
+            const slides = document.querySelectorAll('.testimonial-slide');
+            const indicators = document.querySelectorAll('.testimonial-indicators .indicator');
+            const prevButton = document.querySelector('.prev-testimonial');
+            const nextButton = document.querySelector('.next-testimonial');
+
+            if (!slides.length || !indicators.length) return;
+
+            let currentSlide = 0;
+
+            // Function to show a specific slide
+            function showSlide(index) {
+                // Handle index boundaries
+                if (index < 0) index = slides.length - 1;
+                if (index >= slides.length) index = 0;
+
+                // Update current slide
+                currentSlide = index;
+
+                // Hide all slides and remove active class from indicators
+                slides.forEach(slide => slide.classList.remove('active'));
+                indicators.forEach(indicator => indicator.classList.remove('active'));
+
+                // Show current slide and set active indicator
+                slides[currentSlide].classList.add('active');
+                indicators[currentSlide].classList.add('active');
+            }
+
+            // Event listeners for navigation buttons
+            if (prevButton) {
+                prevButton.addEventListener('click', () => {
+                    showSlide(currentSlide - 1);
+                });
+            }
+
+            if (nextButton) {
+                nextButton.addEventListener('click', () => {
+                    showSlide(currentSlide + 1);
+                });
+            }
+
+            // Add click events to indicators
+            indicators.forEach((indicator, index) => {
+                indicator.addEventListener('click', () => {
+                    showSlide(index);
+                });
+            });
+
+            // Optional: Auto-rotate slides every 6 seconds
+            let slideInterval = setInterval(() => {
+                showSlide(currentSlide + 1);
+            }, 6000);
+
+            // Pause auto-rotation when hovering over the slider
+            const slider = document.querySelector('.testimonials-slider');
+            if (slider) {
+                slider.addEventListener('mouseenter', () => {
+                    clearInterval(slideInterval);
+                });
+
+                slider.addEventListener('mouseleave', () => {
+                    slideInterval = setInterval(() => {
+                        showSlide(currentSlide + 1);
+                    }, 6000);
+                });
+            }
+
+            // Initialize with the first slide
+            showSlide(0);
+        }
+    </script>
+</body>
+
+</html>

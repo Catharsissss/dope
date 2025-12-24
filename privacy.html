@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy — Dope Lab</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/src/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/src/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/src/favicon-16x16.png">
+    <link rel="manifest" href="/src/site.webmanifest">
+    <link rel="stylesheet" href="/src/css/index.css">
+    <script src="/src/js/geo.js"></script>
+    <style>
+        .privacy-section {
+            padding: 60px 0;
+            max-width: 1000px;
+            margin: 0 auto;
+            font-size: 1.1em;
+            line-height: 1.7;
+        }
+
+        .privacy-hero {
+            background: linear-gradient(45deg, #f9f9f9, #2d2d2d);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .privacy-hero h1 {
+            font-size: 3.2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            letter-spacing: -0.05em;
+        }
+
+        .privacy-content {
+            background: var(--white);
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 40px;
+            margin: 20px 0;
+        }
+
+        .privacy-article {
+            margin-bottom: 40px;
+        }
+
+        .privacy-article h2 {
+            font-size: 1.8em;
+            margin-bottom: 1em;
+            color: var(--black);
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .privacy-article h3 {
+            font-size: 1.4em;
+            margin: 1.5em 0 0.8em;
+        }
+
+        .privacy-article ul {
+            margin: 1em 0;
+            padding-left: 30px;
+        }
+
+        .privacy-article li {
+            margin-bottom: 0.8em;
+        }
+
+        .policy-update {
+            background: var(--gray);
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+
+        @media (max-width: 768px) {
+            .privacy-hero h1 {
+                font-size: 2.4rem;
+            }
+
+            .privacy-content {
+                padding: 25px;
+            }
+
+            .privacy-article h2 {
+                font-size: 1.5em;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .privacy-section {
+                padding: 30px 0;
+                max-width: 98vw;
+            }
+
+            .privacy-content {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+                width: 100%;
+            }
+
+            .logo {
+                width: 100%;
+                text-align: left;
+                font-size: 20px;
+                margin-bottom: 10px;
+                padding-right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                gap: 0;
+            }
+
+            nav ul li {
+                margin: 10px 0 0 0;
+            }
+
+            .container {
+                padding: 0 8px;
+            }
+
+            .privacy-hero {
+                padding: 40px 0;
+            }
+
+            .privacy-hero h1 {
+                font-size: 1.7rem;
+            }
+
+            .privacy-content {
+                padding: 12px;
+            }
+
+            .privacy-article h2 {
+                font-size: 1.2em;
+            }
+
+            .privacy-article h3 {
+                font-size: 1em;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .footer-links a {
+                margin: 0 0 8px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .privacy-hero {
+                padding: 20px 0;
+            }
+
+            .privacy-hero h1 {
+                font-size: 1.2rem;
+            }
+
+            .privacy-content {
+                padding: 6px;
+            }
+
+            .privacy-article h2 {
+                font-size: 1em;
+            }
+
+            .privacy-article h3 {
+                font-size: 0.95em;
+            }
+
+            .policy-update {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">DOPE LAB</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Main page</a></li>
+                    <li><a href="/src/catalog.html">Catalog</a></li>
+                    <li><a href="pay.html">Payment</a></li>
+                    <li><a href="shipping.html">Shipping</a></li>
+                    <li><a href="return.html">Return policy</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
+                    <li>
+                        <div class="profile-dropdown">
+                            <a href="#" class="profile-icon">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
+                                        stroke="currentColor" stroke-width="2" />
+                                    <path
+                                        d="M20.5899 22C20.5899 18.13 16.7399 15 11.9999 15C7.25991 15 3.40991 18.13 3.40991 22"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                </svg>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a href="profile.html" class="dropdown-item">Profile</a>
+                                <a href="#" class="dropdown-item" id="logout-btn">Logout</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="cart.html" class="cart-icon">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M6 2L3 6V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22 20.0391 21.7893 20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V6L18 2H6Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M16 10C16 11.0609 15.5786 12.0783 14.8284 12.8284C14.0783 13.5786 13.0609 14 12 14C10.9391 14 9.92172 13.5786 9.17157 12.8284C8.42143 12.0783 8 11.0609 8 10"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            <span class="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="privacy-hero">
+            <div class="container">
+                <h1>Privacy Policy</h1>
+            </div>
+        </section>
+
+        <section class="privacy-section">
+            <div class="container">
+                <div class="privacy-content">
+                    <article class="privacy-article">
+                        <h2>1. Information Collection</h2>
+                        <p>We collect the following types of data:</p>
+                        <ul>
+                            <li>Personal data during registration</li>
+                            <li>Payment transaction information</li>
+                            <li>Website usage data (cookies)</li>
+                            <li>Technical device information</li>
+                        </ul>
+                    </article>
+
+                    <article class="privacy-article">
+                        <h2>2. Use of Data</h2>
+                        <h3>Main purposes:</h3>
+                        <ul>
+                            <li>Order processing</li>
+                            <li>Service quality improvement</li>
+                            <li>Content personalization</li>
+                            <li>Fraud prevention</li>
+                        </ul>
+                    </article>
+
+                    <article class="privacy-article">
+                        <h2>3. Data Protection</h2>
+                        <p>We use modern protection methods:</p>
+                        <ul>
+                            <li>SSL encryption</li>
+                            <li>Regular security audits</li>
+                            <li>Limited data access</li>
+                        </ul>
+                    </article>
+
+                    <div class="policy-update">
+                        <h3>Policy Updates</h3>
+                        <p>We reserve the right to make changes. Major changes will be published on this page.</p>
+                    </div>
+
+                    <article class="privacy-article">
+                        <h2>4. Your Rights</h2>
+                        <ul>
+                            <li>Right to access data</li>
+                            <li>Right to rectification</li>
+                            <li>Right to delete account</li>
+                            <li>Right to withdraw consent</li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="reviews.html">Reviews</a>
+                <a href="support.html">Technical Support</a>
+                <a href="shipping.html">Shipping</a>
+                <a href="return.html">Return Policy</a>
+                <a href="pay.html">Payment</a>
+                <a href="refer.html">Referral Program</a>
+            </div>
+            <p class="copyright">© 2025 DOPE LAB.</p>
+        </div>
+    </footer>
+
+    <div id="modals-placeholder">
+        <!-- authModal: Login and Registration Modal -->
+        <div id="authModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+
+                <div class="auth-tabs">
+                    <button class="tab-btn active" data-tab="login">Login</button>
+                    <button class="tab-btn" data-tab="register">Register</button>
+                </div>
+
+                <div id="login" class="auth-tab-content active">
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <input type="email" id="loginEmail" placeholder="Email" required>
+                            <div class="error-message" id="loginEmailError"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="loginPassword" placeholder="Password" required>
+                            <div class="error-message" id="loginPasswordError"></div>
+                        </div>
+                        <button type="submit" class="btn">Sign in</button>
+                    </form>
+                </div>
+
+                <div id="register" class="auth-tab-content">
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <input type="text" id="regName" placeholder="Your Name" required>
+                            <div class="error-message" id="regNameError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" id="regEmail" placeholder="Email" required>
+                            <div class="error-message" id="regEmailError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" id="regPassword" placeholder="Password (min 6 characters)" required>
+                            <div class="error-message" id="regPasswordError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" id="referralCode" placeholder="Referral Code (optional)">
+                        </div>
+
+                        <button type="submit" class="btn">Sign up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/src/js/auth.js"></script>
+
+</body>
+
+</html>

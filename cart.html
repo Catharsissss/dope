@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart — Dope Lab</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/src/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/src/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/src/favicon-16x16.png">
+    <link rel="manifest" href="/src/site.webmanifest">
+    <link rel="stylesheet" href="/src/css/cart.css">
+    <script src="/src/js/geo.js"></script>
+</head>
+
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">DOPE LAB</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Main page</a></li>
+                    <li><a href="/src/catalog.html">Catalog</a></li>
+                    <li><a href="pay.html">Payment</a></li>
+                    <li><a href="shipping.html">Shipping</a></li>
+                    <li><a href="return.html">Return policy</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
+                    <li>
+                        <div class="profile-dropdown">
+                            <a href="#" class="profile-icon">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
+                                        stroke="currentColor" stroke-width="2" />
+                                    <path
+                                        d="M20.5899 22C20.5899 18.13 16.7399 15 11.9999 15C7.25991 15 3.40991 18.13 3.40991 22"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                </svg>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a href="profile.html" class="dropdown-item">Профиль</a>
+                                <a href="#" class="dropdown-item" id="logout-btn">Выйти</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="cart.html" class="cart-icon">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M6 2L3 6V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22 20.0391 21.7893 20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V6L18 2H6Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M16 10C16 11.0609 15.5786 12.0783 14.8284 12.8284C14.0783 13.5786 13.0609 14 12 14C10.9391 14 9.92172 13.5786 9.17157 12.8284C8.42143 12.0783 8 11.0609 8 10"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            <span class="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <h1>Your Cart</h1>
+        <div id="cart-items-container">
+            <!-- Products will be loaded via JS -->
+        </div>
+        <div id="cart-total">
+            Total: 0 $
+        </div>
+        <button id="clear-cart-btn" class="clear-cart-btn">Clear Cart</button>
+        <button id="checkout-btn" class="checkout-btn">Checkout</button>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="reviews.html">Reviews</a>
+                <a href="support.html">Technical Support</a>
+                <a href="shipping.html">Shipping</a>
+                <a href="return.html">Return Policy</a>
+                <a href="pay.html">Payment</a>
+                <a href="refer.html">Referral Program</a>
+            </div>
+            <p class="copyright">© 2025 DOPE LAB.</p>
+        </div>
+    </footer>
+
+    <div id="modals-placeholder">
+        <!-- authModal: Login and Registration Modal -->
+        <div id="authModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <div class="auth-tabs">
+                    <button class="tab-btn active" data-tab="login">Login</button>
+                    <button class="tab-btn" data-tab="register">Register</button>
+                </div>
+
+                <div id="login" class="auth-tab-content active">
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <input type="email" id="loginEmail" placeholder="Email" required>
+                            <div class="error-message" id="loginEmailError"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="loginPassword" placeholder="Password" required>
+                            <div class="error-message" id="loginPasswordError"></div>
+                        </div>
+                        <button type="submit" class="btn">Sign In</button>
+                    </form>
+                </div>
+
+                <div id="register" class="auth-tab-content">
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <input type="text" id="regName" placeholder="Your Name" required>
+                            <div class="error-message" id="regNameError"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="regEmail" placeholder="Email" required>
+                            <div class="error-message" id="regEmailError"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="regPassword" placeholder="Password (minimum 6 characters)" required>
+                            <div class="error-message" id="regPasswordError"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="referralCode" placeholder="Referral code (optional)">
+                        </div>
+                        <button type="submit" class="btn">Sign Up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/src/js/auth.js"></script>
+
+    <script>
+        // Global controls
+        const cartContainer = document.getElementById('cart-items-container');
+        const totalElement = document.getElementById('cart-total');
+        const clearBtn = document.getElementById('clear-cart-btn');
+        const checkoutBtn = document.getElementById('checkout-btn');
+
+        // Main cart loading function
+        function loadCart() {
+            const cart = getCart();
+
+            if (!cart.length) {
+                showEmptyCart();
+                setupEmptyCartBehavior();
+                return;
+            }
+
+            showCartItems(cart);
+            setupCheckoutButton();
+
+            // Important! Attach handlers AFTER creating elements
+            setupItemControls();
+        }
+
+        // Helper functions
+        function getCart() {
+            return JSON.parse(localStorage.getItem('cart')) || [];
+        }
+
+        function showEmptyCart() {
+            cartContainer.innerHTML = '<p class="empty-cart">Cart is empty</p>';
+            totalElement.textContent = 'Total: 0 $';
+            if (clearBtn) clearBtn.disabled = true;
+
+            // Show notification when cart is empty
+            showEmptyCartNotification();
+        }
+
+        function showCartItems(cart) {
+            const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            totalElement.textContent = `Total: ${total.toFixed(2)} $`;
+            if (clearBtn) clearBtn.disabled = false;
+
+            cartContainer.innerHTML = cart.map((item, index) => `
+                <div class="cart-item" data-index="${index}">
+                    <img src="${item.image.includes('/') ? item.image : `/src/images/${item.image}`}" 
+                         alt="${item.name}"
+                         onerror="this.src='/src/images/placeholder.jpg'">
+                    <div class="cart-item-details">
+                        <h3>${item.name}</h3>
+                        <p>Price: ${item.price.toFixed(2)} $</p>
+                        <div class="quantity-controls">
+                            <button class="quantity-btn" data-action="decrease" data-index="${index}">−</button>
+                            <span>${item.quantity}</span>
+                            <button class="quantity-btn" data-action="increase" data-index="${index}">+</button>
+                        </div>
+                        ${item.size ? `<p>Size: ${item.size}</p>` : ''}
+                        ${item.color ? `<p>Color: ${item.color}</p>` : ''}
+                        <button class="remove-btn" data-index="${index}">Remove</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Notifications
+        function showEmptyCartNotification() {
+            if (document.querySelector('.empty-cart-toast')) return;
+
+            const toast = document.createElement('div');
+            toast.className = 'empty-cart-toast';
+            toast.innerHTML = `
+                <div class="toast-icon">🛒</div>
+                <div class="toast-text">Your cart is empty! Add some products.</div>
+            `;
+            document.body.appendChild(toast);
+
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function showToastMessage(message) {
+            const toast = document.createElement('div');
+            toast.className = 'toast-message';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // Event handlers
+        function setupEmptyCartBehavior() {
+            if (checkoutBtn) {
+                checkoutBtn.classList.add('disabled');
+                checkoutBtn.onclick = (e) => {
+                    e.preventDefault();
+                    showEmptyCartNotification();
+                    checkoutBtn.classList.add('shake');
+                    setTimeout(() => checkoutBtn.classList.remove('shake'), 500);
+                };
+            }
+        }
+
+        function setupCheckoutButton() {
+            if (checkoutBtn) {
+                checkoutBtn.classList.remove('disabled');
+                checkoutBtn.onclick = (e) => {
+                    const cart = getCart();
+                    if (cart.length === 0) {
+                        e.preventDefault();
+                        showEmptyCartNotification();
+                        return;
+                    }
+                    sessionStorage.setItem('checkoutCart', JSON.stringify(cart));
+                    window.location.href = 'checkout.html';
+                };
+            }
+        }
+
+        function setupItemControls() {
+            // Quantity change handlers
+            document.querySelectorAll('.quantity-btn').forEach(btn => {
+                btn.addEventListener('click', function (e) {
+                    const index = e.target.dataset.index;
+                    const action = e.target.dataset.action;
+                    const cart = getCart();
+
+                    if (index >= 0 && index < cart.length) {
+                        if (action === 'increase') {
+                            cart[index].quantity += 1;
+                        } else if (action === 'decrease') {
+                            cart[index].quantity -= 1;
+                            if (cart[index].quantity <= 0) {
+                                cart.splice(index, 1);
+                            }
+                        }
+
+                        localStorage.setItem('cart', JSON.stringify(cart));
+                        loadCart(); // Reload cart
+                    }
+                });
+            });
+
+            // Remove handlers
+            document.querySelectorAll('.remove-btn').forEach(btn => {
+                btn.addEventListener('click', function (e) {
+                    const index = e.target.dataset.index;
+                    const cart = getCart();
+
+                    if (index >= 0 && index < cart.length) {
+                        cart.splice(index, 1);
+                        localStorage.setItem('cart', JSON.stringify(cart));
+                        loadCart(); // Reload cart
+                        showToastMessage('Product removed from cart');
+                    }
+                });
+            });
+        }
+
+        function setupGlobalControls() {
+            // Clear cart
+            if (clearBtn) {
+                clearBtn.addEventListener('click', () => {
+                    if (confirm('Are you sure you want to clear the cart?')) {
+                        localStorage.removeItem('cart');
+                        loadCart();
+                        updateCartCounter();
+                        showToastMessage('Cart cleared');
+                    }
+                });
+            }
+        }
+
+        // Update counter
+        function updateCartCounter() {
+            const cart = getCart();
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const counter = document.querySelector('.cart-count');
+            if (counter) counter.textContent = count;
+        }
+
+        // Initialization
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCart();
+            updateCartCounter();
+            setupGlobalControls(); // Only for global elements
+
+            if (getCart().length === 0) {
+                showEmptyCartNotification();
+            }
+        });
+    </script>
+</body>
+
+</html>

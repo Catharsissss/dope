@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Referral Program — Dope Lab</title>
+    <link rel="apple-touch-icon" sizes="180x180" href="/src/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/src/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/src/favicon-16x16.png">
+    <link rel="manifest" href="/src/site.webmanifest">
+    <link rel="stylesheet" href="/src/css/index.css">
+    <script src="/src/js/geo.js"></script>
+    <style>
+        .referral-section {
+            padding: 60px 20px;
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+
+        .program-card {
+            background: var(--white);
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 40px 30px;
+            margin: 40px 0;
+            text-align: left;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .benefit-card {
+            padding: 25px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .step-list {
+            counter-reset: step;
+            margin: 40px 0;
+            padding: 0;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            padding-left: 50px;
+            position: relative;
+        }
+
+        .step-item::before {
+            counter-increment: step;
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            width: 35px;
+            height: 35px;
+            border: 2px solid var(--black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            top: 0;
+        }
+
+        .auth-notice {
+            background: var(--gray);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .program-card h3 {
+            font-size: 2em;
+            margin-bottom: 1.2em;
+            text-align: center;
+        }
+
+        .benefit-card h4 {
+            font-size: 1.8em;
+            margin-bottom: 0.6em;
+            line-height: 1.3;
+        }
+
+        .step-item h4 {
+            font-size: 1.4em;
+            margin-bottom: 0.5em;
+            line-height: 1.4;
+        }
+
+        .step-item p {
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .referral-hero h1 {
+                font-size: 2rem;
+            }
+
+            .program-card {
+                padding: 30px 20px;
+            }
+
+            .step-item {
+                padding-left: 40px;
+            }
+
+            .step-item::before {
+                width: 30px;
+                height: 30px;
+            }
+
+            .benefit-card h4 {
+                font-size: 1.6em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .step-item {
+                padding-left: 35px;
+            }
+
+            .step-item::before {
+                width: 25px;
+                height: 25px;
+                font-size: 0.9em;
+            }
+        }
+
+        .referral-hero {
+            background: linear-gradient(45deg, #f9f9f9, #2d2d2d);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
+            font-size: 2.2rem;
+        }
+
+        @media (max-width: 992px) {
+            .referral-section {
+                padding: 40px 8px;
+            }
+
+            .program-card {
+                padding: 24px 10px;
+            }
+
+            .benefits-grid {
+                gap: 16px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+                width: 100%;
+            }
+
+            .logo {
+                width: 100%;
+                text-align: left;
+                font-size: 20px;
+                margin-bottom: 10px;
+                padding-right: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: flex-start;
+                width: 100%;
+                gap: 0;
+            }
+
+            nav ul li {
+                margin: 10px 0 0 0;
+            }
+
+            .container {
+                padding: 0 8px;
+            }
+
+            .referral-hero {
+                padding: 40px 0;
+                font-size: 1.2rem;
+            }
+
+            .program-card {
+                padding: 16px 4px;
+                margin: 24px 0;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                margin: 24px 0;
+            }
+
+            .benefit-card {
+                padding: 12px 4px;
+            }
+
+            .step-list {
+                margin: 24px 0;
+            }
+
+            .step-item {
+                padding-left: 28px;
+                margin-bottom: 18px;
+            }
+
+            .step-item::before {
+                width: 22px;
+                height: 22px;
+                font-size: 0.9em;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .footer-links a {
+                margin: 0 0 8px 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .referral-hero {
+                padding: 18px 0;
+                font-size: 1rem;
+            }
+
+            .program-card h3 {
+                font-size: 1.2em;
+            }
+
+            .benefit-card h4 {
+                font-size: 1.1em;
+            }
+
+            .program-card,
+            .benefit-card {
+                padding: 8px 2px;
+            }
+
+            .step-item {
+                padding-left: 18px;
+                margin-bottom: 12px;
+            }
+
+            .step-item::before {
+                width: 16px;
+                height: 16px;
+                font-size: 0.8em;
+            }
+
+            .footer-links {
+                gap: 4px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container header-content">
+            <a href="index.html" class="logo">DOPE LAB</a>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Main page</a></li>
+                    <li><a href="/src/catalog.html">Catalog</a></li>
+                    <li><a href="pay.html">Payment</a></li>
+                    <li><a href="shipping.html">Shipping</a></li>
+                    <li><a href="return.html">Return policy</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
+                    <li>
+                        <div class="profile-dropdown">
+                            <a href="#" class="profile-icon">
+                                <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M12 12C14.7614 12 17 9.76142 17 7C17 4.23858 14.7614 2 12 2C9.23858 2 7 4.23858 7 7C7 9.76142 9.23858 12 12 12Z"
+                                        stroke="currentColor" stroke-width="2" />
+                                    <path
+                                        d="M20.5899 22C20.5899 18.13 16.7399 15 11.9999 15C7.25991 15 3.40991 18.13 3.40991 22"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                </svg>
+                            </a>
+                            <div class="dropdown-menu">
+                                <a href="profile.html" class="dropdown-item">Profile</a>
+                                <a href="#" class="dropdown-item" id="logout-btn">Logout</a>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="cart.html" class="cart-icon">
+                            <svg class="icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M6 2L3 6V20C3 20.5304 3.21071 21.0391 3.58579 21.4142C3.96086 21.7893 4.46957 22 5 22H19C19.5304 22 20.0391 21.7893 20.4142 21.4142C20.7893 21.0391 21 20.5304 21 20V6L18 2H6Z"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M3 6H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M16 10C16 11.0609 15.5786 12.0783 14.8284 12.8284C14.0783 13.5786 13.0609 14 12 14C10.9391 14 9.92172 13.5786 9.17157 12.8284C8.42143 12.0783 8 11.0609 8 10"
+                                    stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                            <span class="cart-count">0</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="referral-hero">
+            <div class="container">
+                <h1>Referral Program</h1>
+                <p>Invite friends and get bonuses</p>
+            </div>
+        </section>
+
+        <section class="referral-section">
+            <div class="container">
+
+                <div class="program-card">
+                    <h3>How it works</h3>
+                    <div class="step-list">
+                        <div class="step-item">
+                            <div>
+                                <h4>Referral code in your profile</h4>
+                                <p>After registration, you receive a personal code</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div>
+                                <h4>Invite friends</h4>
+                                <p>For each friend who registers using your code</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div>
+                                <h4>Earn points</h4>
+                                <p>1 invited friend = 10 points</p>
+                            </div>
+                        </div>
+                        <div class="step-item">
+                            <div>
+                                <h4>Get any product for free</h4>
+                                <p>100 points = any product for free</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="auth-notice">
+                        <p>You need to register to participate in the program</p>
+                    </div>
+                </div>
+
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <h4>10 points</h4>
+                        <p>For each invited user</p>
+                    </div>
+                    <div class="benefit-card">
+                        <h4>100 points</h4>
+                        <p>Any product from the catalog for free</p>
+                    </div>
+                </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="reviews.html">Reviews</a>
+                <a href="support.html">Technical Support</a>
+                <a href="shipping.html">Shipping</a>
+                <a href="return.html">Return Policy</a>
+                <a href="pay.html">Payment</a>
+                <a href="refer.html">Referral Program</a>
+            </div>
+            <p class="copyright">© 2025 DOPE LAB.</p>
+        </div>
+    </footer>
+
+    <div id="modals-placeholder">
+        <div id="authModal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+
+                <div class="auth-tabs">
+                    <button class="tab-btn active" data-tab="login">Login</button>
+                    <button class="tab-btn" data-tab="register">Register</button>
+                </div>
+
+                <div id="login" class="auth-tab-content active">
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <input type="email" id="loginEmail" placeholder="Email" required>
+                            <div class="error-message" id="loginEmailError"></div>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="loginPassword" placeholder="Password" required>
+                            <div class="error-message" id="loginPasswordError"></div>
+                        </div>
+                        <button type="submit" class="btn">Sign in</button>
+                    </form>
+                </div>
+
+                <div id="register" class="auth-tab-content">
+                    <form id="registerForm">
+                        <div class="form-group">
+                            <input type="text" id="regName" placeholder="Your Name" required>
+                            <div class="error-message" id="regNameError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="email" id="regEmail" placeholder="Email" required>
+                            <div class="error-message" id="regEmailError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="password" id="regPassword" placeholder="Password (minimum 6 characters)" required>
+                            <div class="error-message" id="regPasswordError"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="text" id="referralCode" placeholder="Referral Code (optional)">
+                        </div>
+
+                        <button type="submit" class="btn">Sign up</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/src/js/auth.js"></script>
+
+</body>
+
+</html>
